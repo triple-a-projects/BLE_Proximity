@@ -10,7 +10,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build
+  (BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BLE Peripheral',
@@ -35,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
     serviceUuid: 'bf27730d-860a-4e09-889c-2d8b6a9e0fe7',
     manufacturerId: 1234,
     manufacturerData: Uint8List.fromList([1, 2, 3, 4, 5, 6]),
-    includePowerLevel: true,
+    // includeDeviceName: true,
   );
   AdvertiseSetParameters advertiseSetParameters = AdvertiseSetParameters();
 
@@ -69,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> startAdvertising() async {
-    advertiseTime = Timer.periodic(Duration(seconds: 5), (timer) {
+    advertiseTime = Timer.periodic(Duration(seconds: 2), (timer) {
       try {
       FlutterBlePeripheral().start(
         advertiseData: advertiseData, 
