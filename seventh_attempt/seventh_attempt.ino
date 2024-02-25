@@ -15,16 +15,16 @@ BLEUUID serviceUUIDObject(serviceUUID);
 
 class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
   void onResult(BLEAdvertisedDevice advertisedDevice) {
-    // if(advertisedDevice.haveServiceUUID()){
-    //   if(strcmp(advertisedDevice.getServiceUUID().toString().c_str(), serviceUUIDObject.toString().c_str()) == 0){
-    //     if(advertisedDevice.haveManufacturerData()){
-    //         Serial.print("BLE Advertised Device found: \n");
-    //         Serial.println(advertisedDevice.toString().c_str());
-    //     }
-    //   }
+    if(advertisedDevice.haveServiceUUID()){
+      if(strcmp(advertisedDevice.getServiceUUID().toString().c_str(), serviceUUIDObject.toString().c_str()) == 0){
+        // if(advertisedDevice.haveManufacturerData()){
             Serial.print("BLE Advertised Device found: \n");
-            Serial.println(advertisedDevice.toString().c_str());    
-    // }
+            Serial.println(advertisedDevice.toString().c_str());
+        // }
+      }
+            // Serial.print("BLE Advertised Device found: \n");
+            // Serial.println(advertisedDevice.toString().c_str());    
+     }
     
     delay(2000);
   }
@@ -41,7 +41,6 @@ void setup() {
 }
 
 void loop() {
-  
   pBLEScan->start(100);
   Serial.println("...........................................................................................................................");
   pBLEScan->clearResults();
