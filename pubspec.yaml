@@ -10,6 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_ble_peripheral: ^1.2.3
+  uuid: ^4.3.3
+  crypto: ^3.0.3
+  hex: ^0.2.0
 
 dev_dependencies:
   flutter_test:
