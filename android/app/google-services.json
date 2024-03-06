@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "100428051356",
+    "project_id": "bluetooth-attendance-sys-e6be1",
+    "storage_bucket": "bluetooth-attendance-sys-e6be1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100428051356:android:eab630dd76a8ecd6084e59",
+        "android_client_info": {
+          "package_name": "com.example.ble_advertiser"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0f30uuXT1NhINtHiVLxbGoi3Q4gWa1ts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
