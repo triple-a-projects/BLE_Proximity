@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'firebase_options.dart';
+import 'login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ble_peripheral/flutter_ble_peripheral.dart';
@@ -8,21 +12,24 @@ import 'package:uuid/uuid.dart';
 import 'package:crypto/crypto.dart';
 import 'package:hex/hex.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build
-  (BuildContext context) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BLE Peripheral',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: LoginPage(),
     );
   }
 }
@@ -38,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String uniqueUUID = Uuid().v4();
 
-  final rollNumberController = TextEditingController() ;
+  final rollNumberController = TextEditingController();
 
   @override
   void dispose() {
@@ -49,40 +56,38 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('BLE Peripheral'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(8),
-        children: <Widget>[
-          Container(
-            height: 50,
-            child: TextField(
-              decoration: const InputDecoration(
-                labelText: 'Enter Roll Number',
-                border: OutlineInputBorder(),
+        appBar: AppBar(
+          title: Text('BLE Peripheral'),
+        ),
+        body: ListView(
+          padding: const EdgeInsets.all(8),
+          children: <Widget>[
+            Container(
+              height: 50,
+              child: TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Enter Roll Number',
+                  border: OutlineInputBorder(),
+                ),
+                controller: rollNumberController,
               ),
-              controller: rollNumberController,
             ),
-          ),
-          Container(
-          child: TextButton(
-          onPressed: () {
-                if (isAdvertising) {
-                  stopAdvertising();
-                } else {
-                  startAdvertising();
-                  print(rollNumberController.text);
-                }
-              },
-              child: Text(
-                isAdvertising ? 'Stop Advertising' : 'Start Advertising'
-            ),  
-          ),
-          ),
-        ],
-      )
-    );
+            Container(
+              child: TextButton(
+                onPressed: () {
+                  if (isAdvertising) {
+                    stopAdvertising();
+                  } else {
+                    startAdvertising();
+                    print(rollNumberController.text);
+                  }
+                },
+                child: Text(
+                    isAdvertising ? 'Stop Advertising' : 'Start Advertising'),
+              ),
+            ),
+          ],
+        ));
   }
 
   Future<void> startAdvertising() async {
@@ -97,7 +102,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // String rollNumber = "077BEI008";//d204303737424549303134
     //
     //d204303737424549303134
-
 
     String rollNumber = rollNumberController.text;
     String serviceDataUUID = generateUUIDRollNumber(rollNumber);
@@ -123,16 +127,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     AdvertiseSetParameters advertiseSetParameters = AdvertiseSetParameters();
-    advertiseTime = Timer.periodic(Duration(seconds:5), (timer) {
+    advertiseTime = Timer.periodic(Duration(seconds: 5), (timer) {
       try {
-      FlutterBlePeripheral().start(
-        advertiseData: advertiseData, 
-        advertiseSetParameters: advertiseSetParameters
-      );
-      setState(() {
-        isAdvertising = true;
-        print(serviceDataUUID);
-      });
+        FlutterBlePeripheral().start(
+            advertiseData: advertiseData,
+            advertiseSetParameters: advertiseSetParameters);
+        setState(() {
+          isAdvertising = true;
+          print(serviceDataUUID);
+        });
       } catch (e) {
         print('Error starting advertising: $e');
       }
@@ -151,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  String generateUUIDRollNumber(String rollNumber){
+  String generateUUIDRollNumber(String rollNumber) {
     String uniqueUUID = Uuid().v5(Uuid.NAMESPACE_URL, rollNumber);
     String serviceDataUUID = '0000$uniqueUUID-0000-1000-8000-00805f9b34fb';
     String serviceRollNumber = serviceDataUUID.replaceAll('-', '');
