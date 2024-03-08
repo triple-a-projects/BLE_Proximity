@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:async';
+import 'package:ble_advertiser/phone_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'firebase_options.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: PhoneAuth(),
     );
   }
 }
@@ -62,16 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
         body: ListView(
           padding: const EdgeInsets.all(8),
           children: <Widget>[
-            Container(
-              height: 50,
-              child: TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Enter Roll Number',
-                  border: OutlineInputBorder(),
-                ),
-                controller: rollNumberController,
-              ),
-            ),
             Container(
               child: TextButton(
                 onPressed: () {
