@@ -1,3 +1,4 @@
+import 'package:ble_advertiser/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
@@ -33,16 +34,16 @@ class _LoginPageState extends State<LoginPage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (_supportState)
-              const Text('This device is supported')
-            else
-              const Text('This device is not supported'),
-            const Divider(
-              height: 100,
-            ),
-            ElevatedButton(
-                onPressed: _getAvailableBiometrics,
-                child: const Text("Get available biometrics")),
+            // if (_supportState)
+            //   const Text('This device is supported')
+            // else
+            //   const Text('This device is not supported'),
+            // const Divider(
+            //   height: 100,
+            // ),
+            // ElevatedButton(
+            //     onPressed: _getAvailableBiometrics,
+            //     child: const Text("Get available biometrics")),
             const Divider(
               height: 100,
             ),
@@ -63,6 +64,14 @@ class _LoginPageState extends State<LoginPage> {
           ));
 
       print('Authenticated: $authenticated');
+      if (authenticated) {
+        // Navigate to the main page
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => MyHomePage()),
+          (route) => false,
+        );
+      }
     } on PlatformException catch (e) {
       print(e);
     }
