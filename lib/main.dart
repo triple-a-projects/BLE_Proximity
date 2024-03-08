@@ -1,11 +1,24 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:async';
-import 'package:ble_advertiser/phone_auth.dart';
+import 'package:ble_advertiser/initialPage.dart';
+import 'package:ble_advertiser/perspectives/student/check_attendance.dart';
+import 'package:ble_advertiser/perspectives/student/home.dart';
+import 'package:ble_advertiser/perspectives/student/login.dart';
+import 'package:ble_advertiser/perspectives/student/phone_auth.dart';
+import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
+
+import 'package:ble_advertiser/perspectives/teacher/check_attendance.dart';
+import 'package:ble_advertiser/perspectives/teacher/home.dart';
+import 'package:ble_advertiser/perspectives/teacher/login.dart';
+import 'package:ble_advertiser/perspectives/teacher/phone_auth.dart';
+import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
+
 import 'package:firebase_core/firebase_core.dart';
+//import 'package:ble_advertiser/login.dart';
 
 import 'firebase_options.dart';
-import 'login.dart';
+//import 'login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ble_peripheral/flutter_ble_peripheral.dart';
@@ -25,12 +38,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '': (context) => InitialPage(),
+        '/student_phoneauth': (context) => StudentPhoneAuth(),
+        '/student_login': (context) => StudentLoginPage(),
+        '/student_home': (context) => StudentHomePage(),
+        '/student_checkattendance': (context) => StudentAttendancePage(),
+        '/teacher_phoneauth': (context) => TeacherPhoneAuth(),
+        '/teacher_login': (context) => TeacherLoginPage(),
+        '/teacher_home': (context) => TeacherHomePage(),
+        '/teacher_checkattendance': (context) => TeacherAttendancePage(),
+        '/teacher_addclass': (context) => AddClass(),
+      },
       debugShowCheckedModeBanner: false,
       title: 'BLE Peripheral',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PhoneAuth(),
+      home: InitialPage(),
     );
   }
 }
