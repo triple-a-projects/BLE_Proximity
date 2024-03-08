@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ble_advertiser/initialPage.dart';
 import 'package:ble_advertiser/perspectives/student/check_attendance.dart';
 import 'package:ble_advertiser/perspectives/student/home.dart';
@@ -18,13 +20,10 @@ import 'package:firebase_core/firebase_core.dart';
 //import 'package:ble_advertiser/login.dart';
 
 import 'firebase_options.dart';
-//import 'login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ble_peripheral/flutter_ble_peripheral.dart';
 import 'package:uuid/uuid.dart';
-import 'package:crypto/crypto.dart';
-import 'package:hex/hex.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,10 +67,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool isAdvertising = false;
   Timer? advertiseTime;
-
   String uniqueUUID = Uuid().v4();
+  String rollNumber = ''; 
 
-  final rollNumberController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    fetchRollNumber();
+  }
 
   @override
   void dispose() {
@@ -79,15 +82,33 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  Future<void> fetchRollNumber() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      String userUID = currentUser.uid;
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userUID).get();
+      if (userDoc.exists) {
+        setState(() {
+          rollNumber = userDoc.get('rollNo'); 
+        });
+      } else {
+        print('User document not found.');
+      }
+    } else {
+      print('No current user found.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('BLE Peripheral'),
+          title: const Text('BLE Peripheral'),
         ),
         body: ListView(
           padding: const EdgeInsets.all(8),
           children: <Widget>[
+            Text(rollNumber),
             Container(
               child: TextButton(
                 onPressed: () {
@@ -95,7 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     stopAdvertising();
                   } else {
                     startAdvertising();
-                    print(rollNumberController.text);
                   }
                 },
                 child: Text(
@@ -108,33 +128,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> startAdvertising() async {
     String serviceUUID = 'bf27730d-860a-4e09-889c-2d8b6a9e0fe7';
-
-    // Digest hashedUUID = sha256.convert(utf8.encode(uniqueUUID));
-    // Uint8List hashedUUIDBytes = Uint8List.fromList(hashedUUID.bytes);
-    // String hashedUUIDHex = HEX.encode(hashedUUIDBytes);
-
-    // String shortUUID = uniqueUUID.substring(0, 8);
-
-    // String rollNumber = "077BEI008";//d204303737424549303134
-    //
-    //d204303737424549303134
-
-    String rollNumber = rollNumberController.text;
     String serviceDataUUID = generateUUIDRollNumber(rollNumber);
-
     List<int> manufactData = utf8.encode(rollNumber);
-
-    //ffff303737626569303134 077bei014
-
-    //ffff303737626569303038 077bei008
-
-    //ffff303737626569303133 077bei013
-
-    //ffff303737626569303438 077bei048
-
-    //ffff303737626172303136 077bar016
-
-    //ffff303737626172303031 077bar001
 
     AdvertiseData advertiseData = AdvertiseData(
       serviceUuid: serviceUUID,
@@ -150,7 +145,6 @@ class _MyHomePageState extends State<MyHomePage> {
             advertiseSetParameters: advertiseSetParameters);
         setState(() {
           isAdvertising = true;
-          print(serviceDataUUID);
         });
       } catch (e) {
         print('Error starting advertising: $e');
