@@ -2,15 +2,16 @@ import 'package:ble_advertiser/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:ble_advertiser/perspectives/teacher/home.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class TeacherLoginPage extends StatefulWidget {
+  const TeacherLoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<TeacherLoginPage> createState() => _TeacherLoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _TeacherLoginPageState extends State<TeacherLoginPage> {
   late final LocalAuthentication auth;
   bool _supportState = false;
 
@@ -28,29 +29,32 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Bluetooth Attendance System'),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // if (_supportState)
-            //   const Text('This device is supported')
-            // else
-            //   const Text('This device is not supported'),
-            // const Divider(
-            //   height: 100,
-            // ),
-            // ElevatedButton(
-            //     onPressed: _getAvailableBiometrics,
-            //     child: const Text("Get available biometrics")),
-            const Divider(
-              height: 100,
-            ),
-            ElevatedButton(
-                onPressed: _authenticate, child: Text('Authenticate')),
-          ],
-        ));
+      appBar: AppBar(
+        title: const Text('Login Page for Teacher'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          // if (_supportState)
+          //   const Text('This device is supported')
+          // else
+          //   const Text('This device is not supported'),
+          // const Divider(
+          //   height: 100,
+          // ),
+          // ElevatedButton(
+          //     onPressed: _getAvailableBiometrics,
+          //     child: const Text("Get available biometrics")),
+          const Divider(
+            height: 100,
+          ),
+          ElevatedButton(
+            onPressed: _authenticate,
+            child: Text('Authenticate'),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _authenticate() async {
@@ -68,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
         // Navigate to the main page
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => MyHomePage()),
+          MaterialPageRoute(builder: (context) => TeacherHomePage()),
           (route) => false,
         );
       }

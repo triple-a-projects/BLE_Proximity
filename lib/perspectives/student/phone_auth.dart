@@ -1,18 +1,20 @@
-import 'package:ble_advertiser/login.dart';
+//import 'package:ble_advertiser/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:ble_advertiser/perspectives/student/login.dart';
+import 'package:ble_advertiser/perspectives/student/phone_auth.dart';
 
-class PhoneAuth extends StatefulWidget {
-  const PhoneAuth({Key? key}) : super(key: key);
+class StudentPhoneAuth extends StatefulWidget {
+  const StudentPhoneAuth({Key? key}) : super(key: key);
 
   @override
-  State<PhoneAuth> createState() => _PhoneAuthState();
+  State<StudentPhoneAuth> createState() => _StudentPhoneAuthState();
 }
 
-class _PhoneAuthState extends State<PhoneAuth> {
+class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
   FirebaseAuth auth = FirebaseAuth.instance;
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
@@ -51,25 +53,25 @@ class _PhoneAuthState extends State<PhoneAuth> {
     );
     await auth
         .signInWithCredential(credential)
-        .then((value) => createUserDocument(value.user!)
-        );
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
-          (route) => false,
-        );
+        .then((value) => createUserDocument(value.user!));
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => StudentLoginPage()),
+      (route) => false,
+    );
   }
 
-    // Function to create a user document in Firestore
+  // Function to create a user document in Firestore
   Future<void> createUserDocument(User user) async {
     try {
       // Reference to the 'users' collection in Firestore
-      CollectionReference users = FirebaseFirestore.instance.collection('users');
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
 
       // Create a new document with the user's UID
       await users.doc(user.uid).set({
         'rollNo': rollNoController.text,
-        'phoneNo': phoneController.text, 
+        'phoneNo': phoneController.text,
       });
 
       print('User document created in Firestore successfully.');
