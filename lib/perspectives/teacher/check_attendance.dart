@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
 
 class TeacherAttendancePage extends StatelessWidget {
   TeacherAttendancePage({Key? key}) : super(key: key);
-
-  final List<String> subjectNames = [
-    'Communication System',
-    'Propagation and Antenna',
-    'Object Oriented Software Engineering'
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -22,25 +17,52 @@ class TeacherAttendancePage extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       backgroundColor: middle,
-      body: ListView.builder(
-        itemCount: subjectNames.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-              elevation: 3,
-              child: ListTile(
-                title: Text(
-                  subjectNames[index],
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold, color: lightest),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('subjects').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final List<DocumentSnapshot> documents = snapshot.data!.docs;
+
+          return ListView.builder(
+            itemCount: documents.length,
+            itemBuilder: (context, index) {
+              final Map<String, dynamic> data =
+                  documents[index].data() as Map<String, dynamic>;
+              final String subjectName = data['subject'];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  elevation: 3,
+                  child: ListTile(
+                    title: Text(
+                      subjectName,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: lightest,
+                      ),
+                    ),
+                    trailing: GestureDetector(
+                      onTap: () {
+                        // Handle onTap
+                      },
+                      child: const Icon(Icons.edit, color: lightest),
+                    ),
+                  ),
                 ),
-                trailing : GestureDetector(
-                  onTap: () {},
-                  child: const Icon(Icons.edit, color: lightest,)
-                ) ,
-              ),
-            ),
+              );
+            },
           );
         },
       ),
@@ -50,34 +72,47 @@ class TeacherAttendancePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: const Icon(Icons.home, size: 40, color: middle,),
+              icon: const Icon(
+                Icons.home,
+                size: 40,
+                color: middle,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const TeacherHomePage()),
+                  MaterialPageRoute(
+                      builder: (context) => const TeacherHomePage()),
                 );
               },
               tooltip: 'Home',
               color: darkest,
             ),
             IconButton(
-              icon: const Icon(Icons.add_circle_outline_outlined, size: 50,color: middle,),
+              icon: const Icon(
+                Icons.add_circle_outline_outlined,
+                size: 50,
+                color: middle,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>  AddClass()),
+                  MaterialPageRoute(builder: (context) => AddClass()),
                 );
               },
               tooltip: 'Add Class',
               color: darkest,
             ),
             IconButton(
-              icon: const Icon(Icons.assignment, size: 40, color: middle,),
+              icon: const Icon(
+                Icons.assignment,
+                size: 40,
+                color: middle,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TeacherAttendancePage()),
+                  MaterialPageRoute(
+                      builder: (context) => TeacherAttendancePage()),
                 );
               },
               tooltip: 'Check Attendance',

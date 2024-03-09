@@ -13,8 +13,7 @@ import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
 import 'package:ble_advertiser/perspectives/teacher/check_attendance.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:ble_advertiser/perspectives/teacher/login.dart';
-import 'package:ble_advertiser/perspectives/teacher/phone_auth.dart';
-import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
+import 'package:ble_advertiser/perspectives/teacher/email_auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 //import 'package:ble_advertiser/login.dart';
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
         '/student_login': (context) => StudentLoginPage(),
         '/student_home': (context) => StudentHomePage(),
         '/student_checkattendance': (context) => StudentAttendancePage(),
-        '/teacher_phoneauth': (context) => TeacherPhoneAuth(),
+        '/teacher_phoneauth': (context) => TeacherEmailAuth(),
         '/teacher_login': (context) => TeacherLoginPage(),
         '/teacher_home': (context) => TeacherHomePage(),
         '/teacher_checkattendance': (context) => TeacherAttendancePage(),
@@ -68,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isAdvertising = false;
   Timer? advertiseTime;
   String uniqueUUID = Uuid().v4();
-  String rollNumber = ''; 
+  String rollNumber = '';
 
   @override
   void initState() {
@@ -86,10 +85,13 @@ class _MyHomePageState extends State<MyHomePage> {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       String userUID = currentUser.uid;
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userUID).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userUID)
+          .get();
       if (userDoc.exists) {
         setState(() {
-          rollNumber = userDoc.get('rollNo'); 
+          rollNumber = userDoc.get('rollNo');
         });
       } else {
         print('User document not found.');

@@ -19,6 +19,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
   final TextEditingController rollNoController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   String userNumber = '';
   var otpFieldVisibility = false;
   var receivedID = '';
@@ -71,6 +72,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
       // Create a new document with the user's UID
       await users.doc(user.uid).set({
         'rollNo': rollNoController.text,
+        'name': nameController.text,
         'phoneNo': phoneController.text,
       });
 
@@ -101,6 +103,17 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                 decoration: const InputDecoration(
                   hintText: 'Roll Number',
                   labelText: 'Roll No',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  hintText: 'Name',
+                  labelText: 'Name',
                   border: OutlineInputBorder(),
                 ),
               ),
