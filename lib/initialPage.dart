@@ -5,7 +5,7 @@ import 'package:ble_advertiser/perspectives/student/login.dart';
 import 'package:ble_advertiser/perspectives/teacher/login.dart';
 
 import 'package:ble_advertiser/perspectives/student/phone_auth.dart';
-import 'package:ble_advertiser/perspectives/teacher/phone_auth.dart';
+import 'package:ble_advertiser/perspectives/teacher/email_auth.dart';
 
 class InitialPage extends StatelessWidget {
   @override
@@ -32,7 +32,7 @@ class InitialPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TeacherPhoneAuth()),
+                  MaterialPageRoute(builder: (context) => TeacherEmailAuth()),
                 );
               },
               child: Text('Teacher'),

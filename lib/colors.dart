@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 //Dirty yellow to dirty blue
-const darkest= Color(0xFFC6A477);
-const secondDark=Color(0xFFECD59F);
-const middle= Color(0xFFD3E7EE);
-const secondLight= Color(0xFFABD1DC);
-const lightest= Color(0xFF7097AB);
+const darkest = Color(0xFFC6A477);
+const secondDark = Color(0xFFECD59F);
+const middle = Color(0xFFD3E7EE);
+const secondLight = Color(0xFFABD1DC);
+const lightest = Color(0xFF7097AB);
 
-
-//Grey Colors 
+//Grey Colors
 // const darkest= Color(0xFF4A707A);
 // const secondDark=Color(0xFF7697A0);
 // const middle= Color(0xFF94B0B7);
