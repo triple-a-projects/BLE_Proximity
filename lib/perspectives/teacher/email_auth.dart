@@ -1,7 +1,9 @@
+import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ble_advertiser/info.dart';
 
 class TeacherEmailAuth extends StatefulWidget {
   const TeacherEmailAuth({Key? key}) : super(key: key);
@@ -47,7 +49,8 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
       await teachers.doc(teacher.uid).set({
         'email': emailController.text,
         'name': nameController.text,
-      });
+        },
+      );
 
       print('User document created in Firestore successfully.');
     } catch (e) {
@@ -61,6 +64,22 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: darkest,
+          foregroundColor: Colors.white,
+          actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.info_outlined,
+                  color: lightest,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InfoPage()),
+                  );
+                })
+          ],
           title: const Text(
             'Email Authentication',
           ),
@@ -108,6 +127,16 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
                 signInWithEmailAndPassword();
                 FocusManager.instance.primaryFocus?.unfocus();
               },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.only (
+                  left: 40,
+                  right: 40,
+                  top: 15,
+                  bottom: 15,
+                  ),
+                backgroundColor: secondDark,
+                foregroundColor: Colors.white
+              ),
               child: const Text('Sign In'),
             )
           ],

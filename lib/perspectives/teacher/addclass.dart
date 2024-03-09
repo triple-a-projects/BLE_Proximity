@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/perspectives/teacher/check_attendance.dart';
+import 'package:ble_advertiser/info.dart';
 
 class AddClass extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _AddClassState extends State<AddClass> {
     'Project Management',
     'Embedded System',
     'Propagation and Antenna',
-    'Object Oriented Software Engineering'
+    // 'Object Oriented Software Engineering'
   ];
 
   List<String> faculties = [
@@ -61,14 +62,36 @@ class _AddClassState extends State<AddClass> {
       appBar: AppBar(
         title: const Text('Add Class'),
         backgroundColor: darkest,
-        foregroundColor: middle,
+        foregroundColor: Colors.white,
+        automaticallyImplyLeading: true,
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.info_outlined,
+                color: lightest,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InfoPage()),
+                );
+              })
+        ],
       ),
-      backgroundColor: middle,
-      body: Padding(
+      backgroundColor: Colors.white,
+      body: 
+      // ListView(
+     
+      // children: [ 
+         Padding(
+        
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          
           children: [
+      
             DropdownButtonFormField<String>(
               value: selectedSubject,
               onChanged: (newValue) {
@@ -128,26 +151,37 @@ class _AddClassState extends State<AddClass> {
             const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: secondLight,
+                backgroundColor: middle,
+                foregroundColor: darkest,
+               
+                padding: EdgeInsets.only (
+                  left: 50,
+                  right: 50,
+                  top: 15,
+                  bottom: 15,
+                  ),
               ),
               onPressed: () {
                 addSubject();
               },
               child: const Text(
                 'Submit',
-                style: TextStyle(color: lightest),
+                style: TextStyle(color: darkest),
               ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
+ 
+  
+       bottomNavigationBar: BottomAppBar(
+        height: 60,
         color: darkest,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: const Icon(Icons.home, size: 40, color: middle),
+              icon: const Icon(Icons.home, size: 30, color: middle),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -159,8 +193,11 @@ class _AddClassState extends State<AddClass> {
               color: darkest,
             ),
             IconButton(
-              icon: const Icon(Icons.add_circle_outline_outlined,
-                  size: 50, color: middle),
+              icon: const Icon(
+                Icons.add_circle_outline_outlined,
+                size: 35,
+                color: middle,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -171,7 +208,11 @@ class _AddClassState extends State<AddClass> {
               color: darkest,
             ),
             IconButton(
-              icon: const Icon(Icons.assignment, size: 40, color: middle),
+              icon: const Icon(
+                Icons.assignment,
+                size: 30,
+                color: middle,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,

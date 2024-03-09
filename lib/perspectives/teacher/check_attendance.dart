@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
+import 'package:ble_advertiser/info.dart';
 
 class TeacherAttendancePage extends StatelessWidget {
   TeacherAttendancePage({Key? key}) : super(key: key);
@@ -13,10 +14,24 @@ class TeacherAttendancePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Check Attendance'),
         backgroundColor: darkest,
-        foregroundColor: middle,
-        automaticallyImplyLeading: false,
+        foregroundColor: Colors.white,
+        automaticallyImplyLeading: true,
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.info_outlined,
+                color: lightest,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InfoPage()),
+                );
+              })
+        ],
       ),
-      backgroundColor: middle,
+      backgroundColor: Colors.white,
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('subjects').snapshots(),
         builder: (context, snapshot) {
@@ -35,29 +50,39 @@ class TeacherAttendancePage extends StatelessWidget {
           final List<DocumentSnapshot> documents = snapshot.data!.docs;
 
           return ListView.builder(
+            
             itemCount: documents.length,
             itemBuilder: (context, index) {
               final Map<String, dynamic> data =
                   documents[index].data() as Map<String, dynamic>;
               final String subjectName = data['subject'];
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(
+                  top: 8,
+                  bottom: 8,
+                  right: 10,
+                  left: 10,
+                ),
                 child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   elevation: 3,
+                  color: lightest,
                   child: ListTile(
                     title: Text(
                       subjectName,
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: lightest,
+                        color: Colors.black,
                       ),
                     ),
                     trailing: GestureDetector(
                       onTap: () {
                         // Handle onTap
                       },
-                      child: const Icon(Icons.edit, color: lightest),
+                      child: const Icon(Icons.edit, color: Colors.black),
                     ),
                   ),
                 ),
@@ -66,17 +91,14 @@ class TeacherAttendancePage extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: BottomAppBar(
+       bottomNavigationBar: BottomAppBar(
+        height: 60,
         color: darkest,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: const Icon(
-                Icons.home,
-                size: 40,
-                color: middle,
-              ),
+              icon: const Icon(Icons.home, size: 30, color: middle),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -90,7 +112,7 @@ class TeacherAttendancePage extends StatelessWidget {
             IconButton(
               icon: const Icon(
                 Icons.add_circle_outline_outlined,
-                size: 50,
+                size: 35,
                 color: middle,
               ),
               onPressed: () {
@@ -105,7 +127,7 @@ class TeacherAttendancePage extends StatelessWidget {
             IconButton(
               icon: const Icon(
                 Icons.assignment,
-                size: 40,
+                size: 30,
                 color: middle,
               ),
               onPressed: () {
