@@ -1,3 +1,4 @@
+import 'package:ble_advertiser/perspectives/teacher/attendance.dart';
 import 'package:ble_advertiser/perspectives/teacher/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -69,14 +70,11 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
             children: [
               const SizedBox(height: 15),
               Container(
-                
                 padding: const EdgeInsets.all(5.0),
                 child: Column(
-                  
                   children: documents.map((document) {
                     final subjectName = document['subject'] as String;
                     return Padding(
-                      
                       padding: const EdgeInsets.only(
                         top: 8,
                         bottom: 8,
@@ -84,17 +82,14 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                         left: 10,
                       ),
                       child: Container(
-                     
                         padding: const EdgeInsets.all(5),
-                         
                         width: double.infinity,
                         decoration: BoxDecoration(
                           border: Border.all(color: lightest),
                           borderRadius: BorderRadius.circular(15),
-                          color:lightest,
+                          color: lightest,
                         ),
                         child: Column(
-                          
                           children: [
                             Align(
                               alignment: Alignment.centerLeft,
@@ -109,12 +104,11 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  // Handle button press
-                                },
+                                onPressed: () {},
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: middle,
-                                  textStyle: const TextStyle(fontSize: 20, color: Colors.black),
+                                  textStyle: const TextStyle(
+                                      fontSize: 20, color: Colors.black),
                                 ),
                                 child: const Text('Start Class',
                                     style: TextStyle(color: Colors.black)),
@@ -173,8 +167,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => TeacherAttendancePage()),
+                  MaterialPageRoute(builder: (context) => AddClass()),
                 );
               },
               tooltip: 'Check Attendance',
@@ -188,37 +181,37 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
           children: [
             Container(
               height: 100,
-            
-            child: const DrawerHeader(
-              decoration: BoxDecoration(
-                color: darkest,
-              ),
-              padding: EdgeInsets.all(20),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
+              child: const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: darkest,
+                ),
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  'Menu',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                  ),
                 ),
               ),
             ),
-        ),
             ListTile(
               title: const Text('Settings'),
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => TeacherSettingsPage()),
-                  );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TeacherSettingsPage()),
+                );
               },
             ),
             ListTile(
               title: const Text('About Us'),
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => InfoPage()),
-                  );
+                  context,
+                  MaterialPageRoute(builder: (context) => InfoPage()),
+                );
               },
             ),
           ],

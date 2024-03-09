@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/main.dart';
@@ -23,59 +24,73 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
         backgroundColor: darkest,
         foregroundColor: Colors.white,
         actions: [
-            IconButton(
-                icon: Icon(
-                  Icons.info_outlined,
-                  color: lightest,
-                  size: 30,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => InfoPage()),
-                  );
-                })
-          ],
+          IconButton(
+              icon: Icon(
+                Icons.info_outlined,
+                color: lightest,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InfoPage()),
+                );
+              })
+        ],
       ),
       backgroundColor: Colors.white,
-      body: ListView.builder(
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(
-              top: 8,
-              bottom: 8,
-              right: 10,
-              left: 10,
-            ),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              color: lightest,
-              child: ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Subject Name $index',
-                      style: const TextStyle(fontSize: 20, color: Colors.black),
+      body: FutureBuilder(
+        future: FirebaseFirestore.instance.collection('subjects').get(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator(
+              color: Colors.white,
+            );
+          }
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          }
+          final subjects = snapshot.data!.docs;
+          return ListView.builder(
+              itemCount: subjects.length,
+              itemBuilder: (context, index) {
+                String subjectName = subjects[index]['subject'];
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8,
+                    bottom: 8,
+                    right: 10,
+                    left: 10,
+                  ),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                  ],
-                ),
-                subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Your Attendance ',
-                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    color: lightest,
+                    child: ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            '$subjectName',
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                      subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Your Attendance',
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-                
-              ),
-            ),
-          );
+                  ),
+                );
+              });
         },
       ),
       bottomNavigationBar: BottomAppBar(

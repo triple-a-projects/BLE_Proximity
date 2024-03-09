@@ -36,19 +36,19 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
         backgroundColor: darkest,
         foregroundColor: Colors.white,
         actions: [
-            IconButton(
-                icon: Icon(
-                  Icons.info_outlined,
-                  color: lightest,
-                  size: 30,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => InfoPage()),
-                  );
-                })
-          ],
+          IconButton(
+              icon: Icon(
+                Icons.info_outlined,
+                color: lightest,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InfoPage()),
+                );
+              })
+        ],
         title: const Text('Login Page for Student'),
       ),
       body: Column(
@@ -70,15 +70,14 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
           ElevatedButton(
             onPressed: _authenticate,
             style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.only (
+                padding: EdgeInsets.only(
                   left: 40,
                   right: 40,
                   top: 15,
                   bottom: 15,
-                  ),
+                ),
                 backgroundColor: secondDark,
-                foregroundColor: Colors.white
-              ),
+                foregroundColor: Colors.white),
             child: Text('Authenticate'),
           ),
         ],

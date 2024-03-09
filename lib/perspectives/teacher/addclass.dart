@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
@@ -45,10 +46,24 @@ class _AddClassState extends State<AddClass> {
 
   Future<void> addSubject() async {
     try {
+      // Get current user
+      User? currentTeacher = FirebaseAuth.instance.currentUser;
+
+      // Retrieve user data to get the teacher's name
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('teachers')
+          .doc(currentTeacher?.uid)
+          .get();
+
+      // Extract the teacher's name from user data
+      String teacherName = userSnapshot['name'];
+
+      // Add the subject document with all the fields
       await FirebaseFirestore.instance.collection('subjects').add({
         'subject': selectedSubject,
         'faculty': selectedFaculty,
         'semester': selectedSemester,
+        'teacher': teacherName, // Add teacher's name to the document
       });
       print('Class added successfully.');
     } catch (e) {
@@ -80,18 +95,15 @@ class _AddClassState extends State<AddClass> {
         ],
       ),
       backgroundColor: Colors.white,
-      body: 
-      // ListView(
-     
-      // children: [ 
-         Padding(
-        
+      body:
+          // ListView(
+
+          // children: [
+          Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          
           children: [
-      
             DropdownButtonFormField<String>(
               value: selectedSubject,
               onChanged: (newValue) {
@@ -153,13 +165,12 @@ class _AddClassState extends State<AddClass> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: middle,
                 foregroundColor: darkest,
-               
-                padding: EdgeInsets.only (
+                padding: EdgeInsets.only(
                   left: 50,
                   right: 50,
                   top: 15,
                   bottom: 15,
-                  ),
+                ),
               ),
               onPressed: () {
                 addSubject();
@@ -172,9 +183,7 @@ class _AddClassState extends State<AddClass> {
           ],
         ),
       ),
- 
-  
-       bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         height: 60,
         color: darkest,
         child: Row(

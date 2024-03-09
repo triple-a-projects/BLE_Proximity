@@ -12,23 +12,30 @@ class InfoPage extends StatelessWidget {
       ),
       body: const SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Bluetooth-Based Attendance System',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
               SizedBox(height: 16),
               Text(
                 'Welcome to the Bluetooth Attendance System app. This app provides a seamless experience for both students and teachers to manage attendance in classrooms using Bluetooth technology.',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
               SizedBox(height: 25),
               Text(
                 'How to Use:',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: darkest),
+                style: TextStyle(
+                    fontSize: 25, fontWeight: FontWeight.bold, color: darkest),
               ),
               Text(
                 '* Choose your role on the initial page: Student or Teacher.',
@@ -49,7 +56,6 @@ class InfoPage extends StatelessWidget {
                 '* Students will have to check if they are marked present by the system, and in case of errors, they can contact their teachers to make necessary modifications to the database.',
                 style: TextStyle(fontSize: 16),
               ),
-              
             ],
           ),
         ),

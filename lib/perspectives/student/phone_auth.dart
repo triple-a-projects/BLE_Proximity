@@ -120,126 +120,126 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
           centerTitle: true,
         ),
         body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 100),
-            Padding(
-              padding:  EdgeInsets.all(10.0),
-              child: TextField(
-                controller: rollNoController,
-                decoration:  InputDecoration(
-                  hintText: 'Roll Number',
-                  labelText: 'Roll No',
-                  // labelStyle: TextStyle(color: darkest),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ), 
-                  //  focusedBorder: OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(15),
-                  //   borderSide: BorderSide(color: darkest),
-                  // )
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextField(
-                controller: nameController,
-                decoration:  InputDecoration(
-                  hintText: 'Name',
-                  labelText: 'Name',
-                  // labelStyle: TextStyle(color: darkest),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  //  focusedBorder: OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(15),
-                  //   borderSide: BorderSide(color: darkest),
-                  // )
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: IntlPhoneField(
-                showDropdownIcon: false,
-                controller: phoneController,
-                countries: const [
-                  Country(
-                    name: "Nepal",
-                    nameTranslations: {},
-                    flag: "🇳🇵",
-                    code: "NP",
-                    dialCode: "977",
-                    minLength: 10,
-                    maxLength: 10,
-                  )
-                ], // Restrict to Nepal
-                decoration: InputDecoration(
-                  hintText: 'Phone Number',
-                  labelText: 'Phone',
-                  // labelStyle: TextStyle(color: darkest),
-                  border: OutlineInputBorder(
-                    // borderSide: BorderSide(color: darkest),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  // focusedBorder: OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(15),
-                  //   borderSide: BorderSide(color: darkest),
-                  // )
-                ),
-                onChanged: (val) {
-                  userNumber = val.completeNumber;
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Visibility(
-                visible: otpFieldVisibility,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 100),
+              Padding(
+                padding: EdgeInsets.all(10.0),
                 child: TextField(
-                  controller: otpController,
+                  controller: rollNoController,
                   decoration: InputDecoration(
-                    hintText: 'OTP Code',
-                    labelText: 'OTP',
+                    hintText: 'Roll Number',
+                    labelText: 'Roll No',
                     // labelStyle: TextStyle(color: darkest),
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: darkest),
                       borderRadius: BorderRadius.circular(15),
                     ),
-                  //    focusedBorder: OutlineInputBorder(
-                  //   borderRadius: BorderRadius.circular(15),
-                  //   borderSide: BorderSide(color: darkest),
-                  // )
+                    //  focusedBorder: OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(15),
+                    //   borderSide: BorderSide(color: darkest),
+                    // )
                   ),
                 ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (otpFieldVisibility) {
-                  verifyOTPCode();
-                } else {
-                  verifyUserPhoneNumber();
-                }
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.only (
-                  left: 40,
-                  right: 40,
-                  top: 15,
-                  bottom: 15,
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    hintText: 'Name',
+                    labelText: 'Name',
+                    // labelStyle: TextStyle(color: darkest),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    //  focusedBorder: OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(15),
+                    //   borderSide: BorderSide(color: darkest),
+                    // )
                   ),
-                backgroundColor: secondDark,
-                foregroundColor: Colors.white
+                ),
               ),
-              child: const Text('Verify'),
-            ),
-            SizedBox(height: 10),
-          ],
-        ),),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: IntlPhoneField(
+                  showDropdownIcon: false,
+                  controller: phoneController,
+                  countries: const [
+                    Country(
+                      name: "Nepal",
+                      nameTranslations: {},
+                      flag: "🇳🇵",
+                      code: "NP",
+                      dialCode: "977",
+                      minLength: 10,
+                      maxLength: 10,
+                    )
+                  ], // Restrict to Nepal
+                  decoration: InputDecoration(
+                    hintText: 'Phone Number',
+                    labelText: 'Phone',
+                    // labelStyle: TextStyle(color: darkest),
+                    border: OutlineInputBorder(
+                      // borderSide: BorderSide(color: darkest),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    // focusedBorder: OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(15),
+                    //   borderSide: BorderSide(color: darkest),
+                    // )
+                  ),
+                  onChanged: (val) {
+                    userNumber = val.completeNumber;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Visibility(
+                  visible: otpFieldVisibility,
+                  child: TextField(
+                    controller: otpController,
+                    decoration: InputDecoration(
+                      hintText: 'OTP Code',
+                      labelText: 'OTP',
+                      // labelStyle: TextStyle(color: darkest),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: darkest),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      //    focusedBorder: OutlineInputBorder(
+                      //   borderRadius: BorderRadius.circular(15),
+                      //   borderSide: BorderSide(color: darkest),
+                      // )
+                    ),
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (otpFieldVisibility) {
+                    verifyOTPCode();
+                  } else {
+                    verifyUserPhoneNumber();
+                  }
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.only(
+                      left: 40,
+                      right: 40,
+                      top: 15,
+                      bottom: 15,
+                    ),
+                    backgroundColor: secondDark,
+                    foregroundColor: Colors.white),
+                child: const Text('Verify'),
+              ),
+              SizedBox(height: 10),
+            ],
+          ),
+        ),
       ),
     );
   }

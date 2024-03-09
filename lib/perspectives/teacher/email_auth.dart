@@ -46,9 +46,10 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
           FirebaseFirestore.instance.collection('teachers');
 
       // Create a new document with the user's UID
-      await teachers.doc(teacher.uid).set({
-        'email': emailController.text,
-        'name': nameController.text,
+      await teachers.doc(teacher.uid).set(
+        {
+          'email': emailController.text,
+          'name': nameController.text,
         },
       );
 
@@ -128,15 +129,14 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.only (
-                  left: 40,
-                  right: 40,
-                  top: 15,
-                  bottom: 15,
+                  padding: EdgeInsets.only(
+                    left: 40,
+                    right: 40,
+                    top: 15,
+                    bottom: 15,
                   ),
-                backgroundColor: secondDark,
-                foregroundColor: Colors.white
-              ),
+                  backgroundColor: secondDark,
+                  foregroundColor: Colors.white),
               child: const Text('Sign In'),
             )
           ],

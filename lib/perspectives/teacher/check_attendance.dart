@@ -1,3 +1,4 @@
+import 'package:ble_advertiser/perspectives/teacher/attendance.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
@@ -50,7 +51,6 @@ class TeacherAttendancePage extends StatelessWidget {
           final List<DocumentSnapshot> documents = snapshot.data!.docs;
 
           return ListView.builder(
-            
             itemCount: documents.length,
             itemBuilder: (context, index) {
               final Map<String, dynamic> data =
@@ -80,7 +80,11 @@ class TeacherAttendancePage extends StatelessWidget {
                     ),
                     trailing: GestureDetector(
                       onTap: () {
-                        // Handle onTap
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    AttendanceTable())); // Handle onTap
                       },
                       child: const Icon(Icons.edit, color: Colors.black),
                     ),
@@ -91,7 +95,7 @@ class TeacherAttendancePage extends StatelessWidget {
           );
         },
       ),
-       bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         height: 60,
         color: darkest,
         child: Row(

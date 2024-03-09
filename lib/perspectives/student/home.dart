@@ -1,4 +1,5 @@
 import 'package:ble_advertiser/perspectives/student/settings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/main.dart';
@@ -47,67 +48,82 @@ class _StudentHomePageState extends State<StudentHomePage> {
               },
             ),
           )),
-      
-      body: ListView.builder(
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(
-              top: 8,
-              bottom: 8,
-              right: 10,
-              left: 10,
-            ),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              color: lightest,
-              child: ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Subject Name $index',
-                      style: const TextStyle(fontSize: 20, color: Colors.black),
+      body: FutureBuilder(
+        future: FirebaseFirestore.instance.collection('subjects').get(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator(
+              color: Colors.white,
+            );
+          }
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          }
+          final subjects = snapshot.data!.docs;
+          return ListView.builder(
+              itemCount: subjects.length,
+              itemBuilder: (context, index) {
+                String subjectName = subjects[index]['subject'];
+                String teacherName = subjects[index]['teacherName'];
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8,
+                    bottom: 8,
+                    right: 10,
+                    left: 10,
+                  ),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                  ],
-                ),
-                subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Name of Teacher ',
-                      style: TextStyle(fontSize: 15, color: Colors.black),
-                    ),
-                  ],
-                ),
-                trailing: SizedBox(
-                  width: 100,
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => MyHomePage()),
-                          (route) => false,
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: middle,
-                        textStyle: const TextStyle(fontSize: 15),
+                    color: lightest,
+                    child: ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            '$subjectName',
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.black),
+                          ),
+                        ],
                       ),
-                      child: const Text(
-                        'Attend Class',
-                        style: TextStyle(color: Colors.black),
+                      subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            '$teacherName',
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                      trailing: SizedBox(
+                        width: 100,
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyHomePage()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: middle,
+                              textStyle: const TextStyle(fontSize: 15),
+                            ),
+                            child: const Text(
+                              'Attend',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
-          );
+                );
+              });
         },
       ),
       bottomNavigationBar: BottomAppBar(
@@ -131,37 +147,37 @@ class _StudentHomePageState extends State<StudentHomePage> {
           children: [
             Container(
               height: 100,
-            
-            child: const DrawerHeader(
-              decoration: BoxDecoration(
-                color: darkest,
-              ),
-              padding: EdgeInsets.all(20),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
+              child: const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: darkest,
+                ),
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  'Menu',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                  ),
                 ),
               ),
             ),
-        ),
             ListTile(
               title: const Text('Settings'),
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => StudentSettingsPage()),
-                  );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => StudentSettingsPage()),
+                );
               },
             ),
             ListTile(
               title: const Text('About Us'),
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => InfoPage()),
-                  );
+                  context,
+                  MaterialPageRoute(builder: (context) => InfoPage()),
+                );
               },
             ),
           ],
