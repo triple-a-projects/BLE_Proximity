@@ -1,9 +1,11 @@
+import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:ble_advertiser/perspectives/student/login.dart';
 import 'package:ble_advertiser/perspectives/student/home.dart';
+import 'package:ble_advertiser/info.dart';
 
 class StudentLoginPage extends StatefulWidget {
   const StudentLoginPage({super.key});
@@ -31,6 +33,22 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: darkest,
+        foregroundColor: Colors.white,
+        actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.info_outlined,
+                  color: lightest,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InfoPage()),
+                  );
+                })
+          ],
         title: const Text('Login Page for Student'),
       ),
       body: Column(
@@ -51,6 +69,16 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
           ),
           ElevatedButton(
             onPressed: _authenticate,
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.only (
+                  left: 40,
+                  right: 40,
+                  top: 15,
+                  bottom: 15,
+                  ),
+                backgroundColor: secondDark,
+                foregroundColor: Colors.white
+              ),
             child: Text('Authenticate'),
           ),
         ],

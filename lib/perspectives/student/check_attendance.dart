@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/main.dart';
 import 'package:ble_advertiser/perspectives/student/home.dart';
+import 'package:ble_advertiser/info.dart';
 
 class StudentAttendancePage extends StatefulWidget {
   const StudentAttendancePage({Key? key}) : super(key: key);
@@ -20,31 +21,58 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
       appBar: AppBar(
         title: const Text('Check Attendance'),
         backgroundColor: darkest,
-        foregroundColor: middle,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, size: 30),
-          onPressed: () {},
-        ),
+        foregroundColor: Colors.white,
+        actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.info_outlined,
+                  color: lightest,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InfoPage()),
+                  );
+                })
+          ],
       ),
-      backgroundColor: middle,
+      backgroundColor: Colors.white,
       body: ListView.builder(
-        itemCount: 1,
+        itemCount: 3,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(
+              top: 8,
+              bottom: 8,
+              right: 10,
+              left: 10,
+            ),
             child: Card(
-              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              color: lightest,
               child: ListTile(
-                tileColor: secondLight,
-                title: Text(
-                  'Communication System',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: darkest,
-                  ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Subject Name $index',
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                  ],
                 ),
-                subtitle: const Text('Attendance: 80%'),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Your Attendance ',
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                  ],
+                ),
+                
               ),
             ),
           );

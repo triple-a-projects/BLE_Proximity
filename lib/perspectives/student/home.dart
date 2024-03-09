@@ -1,7 +1,9 @@
+import 'package:ble_advertiser/perspectives/student/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/main.dart';
 // import 'package:student/check_attendance.dart';
+import 'package:ble_advertiser/info.dart';
 
 class StudentHomePage extends StatefulWidget {
   const StudentHomePage({Key? key}) : super(key: key);
@@ -19,7 +21,21 @@ class _StudentHomePageState extends State<StudentHomePage> {
       appBar: AppBar(
           title: const Text('Dashboard'),
           backgroundColor: darkest,
-          foregroundColor: middle,
+          actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.info_outlined,
+                  color: lightest,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InfoPage()),
+                  );
+                })
+          ],
+          foregroundColor: Colors.white,
           leading: Builder(
             builder: (context) => IconButton(
               icon: const Icon(
@@ -31,9 +47,9 @@ class _StudentHomePageState extends State<StudentHomePage> {
               },
             ),
           )),
-      backgroundColor: middle,
+      
       body: ListView.builder(
-        itemCount: 1,
+        itemCount: 3,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(
@@ -46,13 +62,14 @@ class _StudentHomePageState extends State<StudentHomePage> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
+              color: lightest,
               child: ListTile(
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       'Subject Name $index',
-                      style: const TextStyle(fontSize: 20, color: darkest),
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
                 ),
@@ -61,7 +78,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
                   children: [
                     Text(
                       'Name of Teacher ',
-                      style: TextStyle(fontSize: 15, color: darkest),
+                      style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                   ],
                 ),
@@ -78,12 +95,12 @@ class _StudentHomePageState extends State<StudentHomePage> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: secondLight,
+                        backgroundColor: middle,
                         textStyle: const TextStyle(fontSize: 15),
                       ),
                       child: const Text(
                         'Attend Class',
-                        style: TextStyle(color: darkest),
+                        style: TextStyle(color: Colors.black),
                       ),
                     ),
                   ),
@@ -112,28 +129,39 @@ class _StudentHomePageState extends State<StudentHomePage> {
       drawer: Drawer(
         child: ListView(
           children: [
-            const DrawerHeader(
+            Container(
+              height: 100,
+            
+            child: const DrawerHeader(
               decoration: BoxDecoration(
-                color: middle,
+                color: darkest,
               ),
+              padding: EdgeInsets.all(20),
               child: Text(
                 'Menu',
                 style: TextStyle(
-                  color: darkest,
-                  fontSize: 24,
+                  color: Colors.white,
+                  fontSize: 30,
                 ),
               ),
             ),
+        ),
             ListTile(
               title: const Text('Settings'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => StudentSettingsPage()),
+                  );
               },
             ),
             ListTile(
               title: const Text('About Us'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InfoPage()),
+                  );
               },
             ),
           ],

@@ -1,4 +1,6 @@
 //import 'package:ble_advertiser/login.dart';
+import 'package:ble_advertiser/colors.dart';
+import 'package:ble_advertiser/initialPage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl_phone_field/countries.dart';
@@ -6,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:ble_advertiser/perspectives/student/login.dart';
 import 'package:ble_advertiser/perspectives/student/phone_auth.dart';
+import 'package:ble_advertiser/info.dart';
 
 class StudentPhoneAuth extends StatefulWidget {
   const StudentPhoneAuth({Key? key}) : super(key: key);
@@ -88,22 +91,54 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: darkest,
+          foregroundColor: Colors.white,
+          actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.info_outlined,
+                  color: lightest,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InfoPage()),
+                  );
+                })
+          ],
+          // leading: IconButton(
+          //   icon: Icon(Icons.arrow_back, color: lightest, size: 35),
+          //   onPressed: () {
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => ChooseRolePage()));
+          //   },
+          // ),
           title: const Text(
             'Phone Authentication',
           ),
           centerTitle: true,
         ),
-        body: Column(
+        body: SingleChildScrollView(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(height: 100),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding:  EdgeInsets.all(10.0),
               child: TextField(
                 controller: rollNoController,
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                   hintText: 'Roll Number',
                   labelText: 'Roll No',
-                  border: OutlineInputBorder(),
+                  // labelStyle: TextStyle(color: darkest),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ), 
+                  //  focusedBorder: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.circular(15),
+                  //   borderSide: BorderSide(color: darkest),
+                  // )
                 ),
               ),
             ),
@@ -111,10 +146,17 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
               padding: const EdgeInsets.all(10.0),
               child: TextField(
                 controller: nameController,
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                   hintText: 'Name',
                   labelText: 'Name',
-                  border: OutlineInputBorder(),
+                  // labelStyle: TextStyle(color: darkest),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  //  focusedBorder: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.circular(15),
+                  //   borderSide: BorderSide(color: darkest),
+                  // )
                 ),
               ),
             ),
@@ -134,10 +176,18 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                     maxLength: 10,
                   )
                 ], // Restrict to Nepal
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Phone Number',
                   labelText: 'Phone',
-                  border: OutlineInputBorder(),
+                  // labelStyle: TextStyle(color: darkest),
+                  border: OutlineInputBorder(
+                    // borderSide: BorderSide(color: darkest),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  // focusedBorder: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.circular(15),
+                  //   borderSide: BorderSide(color: darkest),
+                  // )
                 ),
                 onChanged: (val) {
                   userNumber = val.completeNumber;
@@ -150,10 +200,18 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                 visible: otpFieldVisibility,
                 child: TextField(
                   controller: otpController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'OTP Code',
                     labelText: 'OTP',
-                    border: OutlineInputBorder(),
+                    // labelStyle: TextStyle(color: darkest),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: darkest),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  //    focusedBorder: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.circular(15),
+                  //   borderSide: BorderSide(color: darkest),
+                  // )
                   ),
                 ),
               ),
@@ -167,10 +225,21 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                 }
                 FocusManager.instance.primaryFocus?.unfocus();
               },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.only (
+                  left: 40,
+                  right: 40,
+                  top: 15,
+                  bottom: 15,
+                  ),
+                backgroundColor: secondDark,
+                foregroundColor: Colors.white
+              ),
               child: const Text('Verify'),
-            )
+            ),
+            SizedBox(height: 10),
           ],
-        ),
+        ),),
       ),
     );
   }
