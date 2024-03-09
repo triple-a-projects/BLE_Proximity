@@ -12,7 +12,6 @@ import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
 
 import 'package:ble_advertiser/perspectives/teacher/check_attendance.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
-import 'package:ble_advertiser/perspectives/teacher/login.dart';
 import 'package:ble_advertiser/perspectives/teacher/email_auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -37,13 +36,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '': (context) => InitialPage(),
+        '': (context) => ChooseRolePage(),
         '/student_phoneauth': (context) => StudentPhoneAuth(),
         '/student_login': (context) => StudentLoginPage(),
         '/student_home': (context) => StudentHomePage(),
         '/student_checkattendance': (context) => StudentAttendancePage(),
-        '/teacher_phoneauth': (context) => TeacherEmailAuth(),
-        '/teacher_login': (context) => TeacherLoginPage(),
+        '/teacher_emailauth': (context) => TeacherEmailAuth(),
         '/teacher_home': (context) => TeacherHomePage(),
         '/teacher_checkattendance': (context) => TeacherAttendancePage(),
         '/teacher_addclass': (context) => AddClass(),
@@ -53,7 +51,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: InitialPage(),
+      home: ChooseRolePage(),
     );
   }
 }

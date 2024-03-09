@@ -1,7 +1,7 @@
+import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ble_advertiser/perspectives/teacher/login.dart';
 
 class TeacherEmailAuth extends StatefulWidget {
   const TeacherEmailAuth({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
       createUserDocument(userCredential.user!);
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => TeacherLoginPage()),
+        MaterialPageRoute(builder: (context) => TeacherHomePage()),
         (route) => false,
       );
     } on FirebaseAuthException catch (e) {
