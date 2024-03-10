@@ -2,6 +2,7 @@ import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:flutter/material.dart';
 import 'package:ble_advertiser/info.dart';
+import 'package:ble_advertiser/animation.dart';
 
 class TeacherSettingsPage extends StatefulWidget {
   const TeacherSettingsPage({super.key});
@@ -29,9 +30,10 @@ class _TeacherSettingsPageState extends State<TeacherSettingsPage> {
               size: 30,
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => InfoPage()),
+              Navigator.of(context).push(
+                PageTransitionAnimation(
+                  page: InfoPage(),
+                ),
               );
             },
           )
@@ -77,10 +79,10 @@ class _TeacherSettingsPageState extends State<TeacherSettingsPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TeacherHomePage()),
+                Navigator.of(context).push(
+                  PageTransitionAnimation(
+                    page: TeacherHomePage(),
+                  ),
                 );
               },
               style: ElevatedButton.styleFrom(

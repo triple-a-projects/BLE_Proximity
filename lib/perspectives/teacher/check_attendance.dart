@@ -1,4 +1,5 @@
 import 'package:ble_advertiser/perspectives/teacher/attendance.dart';
+import 'package:ble_advertiser/perspectives/teacher/teacher_base.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
@@ -11,29 +12,10 @@ class TeacherAttendancePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Check Attendance'),
-        backgroundColor: darkest,
-        foregroundColor: Colors.white,
-        automaticallyImplyLeading: true,
-        actions: [
-          IconButton(
-              icon: const Icon(
-                Icons.info_outlined,
-                color: lightest,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InfoPage()),
-                );
-              })
-        ],
-      ),
-      backgroundColor: Colors.white,
-      body: StreamBuilder<QuerySnapshot>(
+    return TeacherBasePage(
+      title: 'Check Attendance',
+      currentPageIndex: 2,
+      buildBody: (context) => StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('subjects').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -95,58 +77,6 @@ class TeacherAttendancePage extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: BottomAppBar(
-        height: 60,
-        color: darkest,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.home, size: 30, color: middle),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TeacherHomePage()),
-                );
-              },
-              tooltip: 'Home',
-              color: darkest,
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.add_circle_outline_outlined,
-                size: 35,
-                color: middle,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AddClass()),
-                );
-              },
-              tooltip: 'Add Class',
-              color: darkest,
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.assignment,
-                size: 30,
-                color: middle,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TeacherAttendancePage()),
-                );
-              },
-              tooltip: 'Check Attendance',
-              color: darkest,
-            ),
-          ],
-        ),
-      ),
-    );
+    ); //Base Page
   }
 }

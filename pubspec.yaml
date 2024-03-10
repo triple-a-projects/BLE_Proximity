@@ -20,6 +20,7 @@ dependencies:
   intl_phone_field: ^3.2.0
   cloud_firestore: ^4.15.7
   firebase_database: ^10.4.9
+  google_nav_bar: ^5.0.6
 
   intl: any
 dev_dependencies:

@@ -1,4 +1,6 @@
+import 'package:ble_advertiser/perspectives/student/student_base.dart';
 import 'package:ble_advertiser/perspectives/teacher/settings.dart';
+import 'package:ble_advertiser/perspectives/teacher/teacher_base.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
@@ -15,38 +17,14 @@ class TeacherHomePage extends StatefulWidget {
 
 class _TeacherHomePageState extends State<TeacherHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  int _currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        backgroundColor: darkest,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-              icon: const Icon(
-                Icons.info_outlined,
-                color: lightest,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InfoPage()),
-                );
-              })
-        ],
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            _scaffoldKey.currentState?.openDrawer();
-          },
-        ),
-      ),
-      backgroundColor: Colors.white,
-      body: StreamBuilder<QuerySnapshot>(
+    return TeacherBasePage(
+      title: 'Dashboard',
+      currentPageIndex: _currentPageIndex,
+      buildBody: (context) => StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('subjects').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -128,98 +106,6 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
           );
         },
       ),
-      bottomNavigationBar: BottomAppBar(
-        height: 60,
-        color: darkest,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.home, size: 30, color: middle),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TeacherHomePage()),
-                );
-              },
-              tooltip: 'Home',
-              color: darkest,
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.add_circle_outline_outlined,
-                size: 35,
-                color: middle,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AddClass()),
-                );
-              },
-              tooltip: 'Add Class',
-              color: darkest,
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.assignment,
-                size: 30,
-                color: middle,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AddClass()),
-                );
-              },
-              tooltip: 'Check Attendance',
-              color: darkest,
-            ),
-          ],
-        ),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            const SizedBox(
-              height: 100,
-              child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: darkest,
-                ),
-                padding: EdgeInsets.all(20),
-                child: Text(
-                  'Menu',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                  ),
-                ),
-              ),
-            ),
-            ListTile(
-              title: const Text('Settings'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TeacherSettingsPage()),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('About Us'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InfoPage()),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+    ); //BasePage
   }
 }

@@ -1,3 +1,4 @@
+import 'package:ble_advertiser/perspectives/student/student_base.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ble_advertiser/colors.dart';
@@ -16,28 +17,10 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Check Attendance'),
-        backgroundColor: darkest,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-              icon: const Icon(
-                Icons.info_outlined,
-                color: lightest,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InfoPage()),
-                );
-              })
-        ],
-      ),
-      backgroundColor: Colors.white,
-      body: FutureBuilder(
+    return StudentBasePage(
+      title: 'Attendance',
+      currentPageIndex: _currentPageIndex,
+      buildBody: (context) => FutureBuilder(
         future: FirebaseFirestore.instance.collection('subjects').get(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -91,45 +74,6 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
               });
         },
       ),
-      bottomNavigationBar: BottomAppBar(
-        height: 60,
-        color: darkest,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              child: buildBottomNavItem(Icons.home, 0, 'Home'),
-            ),
-            Expanded(
-              child:
-                  buildBottomNavItem(Icons.assignment, 1, 'Check Attendance'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildBottomNavItem(IconData icon, int pageIndex, String tooltip) {
-    bool isSelected = _currentPageIndex == pageIndex;
-
-    return IconButton(
-      icon: Icon(
-        icon,
-        size: 30,
-        color: isSelected ? Colors.white : middle,
-      ),
-      onPressed: () {
-        setState(() {
-          _currentPageIndex = pageIndex;
-        });
-        if (pageIndex == 0) {
-          Navigator.pushReplacementNamed(context, '/student_home');
-        } else if (pageIndex == 1) {
-          Navigator.pushReplacementNamed(context, '/student_checkattendance');
-        }
-      },
-      tooltip: tooltip,
     );
   }
 }

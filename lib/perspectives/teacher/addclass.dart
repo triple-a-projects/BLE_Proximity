@@ -1,3 +1,4 @@
+import 'package:ble_advertiser/perspectives/teacher/teacher_base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -75,168 +76,94 @@ class _AddClassState extends State<AddClass> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Class'),
-        backgroundColor: darkest,
-        foregroundColor: Colors.white,
-        automaticallyImplyLeading: true,
-        actions: [
-          IconButton(
-              icon: const Icon(
-                Icons.info_outlined,
-                color: lightest,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InfoPage()),
-                );
-              })
-        ],
-      ),
-      backgroundColor: Colors.white,
-      body:
-          // ListView(
-
-          // children: [
-          Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            DropdownButtonFormField<String>(
-              value: selectedSubject,
-              onChanged: (newValue) {
-                setState(() {
-                  selectedSubject = newValue;
-                });
-              },
-              items: subjects.map((subject) {
-                return DropdownMenuItem<String>(
-                  value: subject,
-                  child: Text(subject),
-                );
-              }).toList(),
-              decoration: const InputDecoration(
-                labelText: 'Subject',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              value: selectedFaculty,
-              onChanged: (newValue) {
-                setState(() {
-                  selectedFaculty = newValue;
-                });
-              },
-              items: faculties.map((faculty) {
-                return DropdownMenuItem<String>(
-                  value: faculty,
-                  child: Text(faculty),
-                );
-              }).toList(),
-              decoration: const InputDecoration(
-                labelText: 'Faculty',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              value: selectedSemester,
-              onChanged: (newValue) {
-                setState(() {
-                  selectedSemester = newValue;
-                });
-              },
-              items: semesters.map((semester) {
-                return DropdownMenuItem<String>(
-                  value: semester,
-                  child: Text(semester),
-                );
-              }).toList(),
-              decoration: const InputDecoration(
-                labelText: 'Semester',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: middle,
-                foregroundColor: darkest,
-                padding: const EdgeInsets.only(
-                  left: 50,
-                  right: 50,
-                  top: 15,
-                  bottom: 15,
+    return TeacherBasePage(
+        title: 'Add Subject',
+        currentPageIndex: 1,
+        buildBody: (context) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DropdownButtonFormField<String>(
+                  value: selectedSubject,
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedSubject = newValue;
+                    });
+                  },
+                  items: subjects.map((subject) {
+                    return DropdownMenuItem<String>(
+                      value: subject,
+                      child: Text(subject),
+                    );
+                  }).toList(),
+                  decoration: const InputDecoration(
+                    labelText: 'Subject',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
-              ),
-              onPressed: () {
-                addSubject();
-              },
-              child: const Text(
-                'Submit',
-                style: TextStyle(color: darkest),
-              ),
+                const SizedBox(height: 20),
+                DropdownButtonFormField<String>(
+                  value: selectedFaculty,
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedFaculty = newValue;
+                    });
+                  },
+                  items: faculties.map((faculty) {
+                    return DropdownMenuItem<String>(
+                      value: faculty,
+                      child: Text(faculty),
+                    );
+                  }).toList(),
+                  decoration: const InputDecoration(
+                    labelText: 'Faculty',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                DropdownButtonFormField<String>(
+                  value: selectedSemester,
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedSemester = newValue;
+                    });
+                  },
+                  items: semesters.map((semester) {
+                    return DropdownMenuItem<String>(
+                      value: semester,
+                      child: Text(semester),
+                    );
+                  }).toList(),
+                  decoration: const InputDecoration(
+                    labelText: 'Semester',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: middle,
+                    foregroundColor: darkest,
+                    padding: const EdgeInsets.only(
+                      left: 50,
+                      right: 50,
+                      top: 15,
+                      bottom: 15,
+                    ),
+                  ),
+                  onPressed: () {
+                    addSubject();
+                  },
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(color: darkest),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        height: 60,
-        color: darkest,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.home, size: 30, color: middle),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TeacherHomePage()),
-                );
-              },
-              tooltip: 'Home',
-              color: darkest,
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.add_circle_outline_outlined,
-                size: 35,
-                color: middle,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AddClass()),
-                );
-              },
-              tooltip: 'Add Class',
-              color: darkest,
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.assignment,
-                size: 30,
-                color: middle,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TeacherAttendancePage()),
-                );
-              },
-              tooltip: 'Check Attendance',
-              color: darkest,
-            ),
-          ],
-        ),
-      ),
-    );
+          );
+        }); //Base Page
   }
 }
