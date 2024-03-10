@@ -1,12 +1,10 @@
 import 'package:ble_advertiser/colors.dart';
-import 'package:ble_advertiser/main.dart';
-import 'package:ble_advertiser/perspectives/student/home.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:flutter/material.dart';
 import 'package:ble_advertiser/info.dart';
 
 class TeacherSettingsPage extends StatefulWidget {
-  const TeacherSettingsPage({Key? key}) : super(key: key);
+  const TeacherSettingsPage({super.key});
 
   @override
   _TeacherSettingsPageState createState() => _TeacherSettingsPageState();
@@ -20,12 +18,12 @@ class _TeacherSettingsPageState extends State<TeacherSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
         backgroundColor: darkest,
         foregroundColor: Colors.white,
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.info_outlined,
               color: lightest,
               size: 30,
@@ -44,12 +42,12 @@ class _TeacherSettingsPageState extends State<TeacherSettingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Notifications',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SwitchListTile(
-              title: Text('Receive Notifications'),
+              title: const Text('Receive Notifications'),
               activeColor: secondDark,
               value: notificationSwitchValue,
               onChanged: (value) {
@@ -58,8 +56,8 @@ class _TeacherSettingsPageState extends State<TeacherSettingsPage> {
                 });
               },
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Volume',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
@@ -76,25 +74,26 @@ class _TeacherSettingsPageState extends State<TeacherSettingsPage> {
               label: volumeSliderValue.round().toString(),
               activeColor: secondDark,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TeacherHomePage()),
+                  MaterialPageRoute(
+                      builder: (context) => const TeacherHomePage()),
                 );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: middle,
                 foregroundColor: Colors.white,
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 50,
                   right: 50,
                   top: 15,
                   bottom: 15,
                 ),
               ),
-              child: Text('Save Settings'),
+              child: const Text('Save Settings'),
             ),
           ],
         ),

@@ -7,6 +7,8 @@ import 'package:ble_advertiser/perspectives/teacher/check_attendance.dart';
 import 'package:ble_advertiser/info.dart';
 
 class AddClass extends StatefulWidget {
+  const AddClass({super.key});
+
   @override
   _AddClassState createState() => _AddClassState();
 }
@@ -81,7 +83,7 @@ class _AddClassState extends State<AddClass> {
         automaticallyImplyLeading: true,
         actions: [
           IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.info_outlined,
                 color: lightest,
                 size: 30,
@@ -165,7 +167,7 @@ class _AddClassState extends State<AddClass> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: middle,
                 foregroundColor: darkest,
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 50,
                   right: 50,
                   top: 15,
@@ -210,7 +212,7 @@ class _AddClassState extends State<AddClass> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddClass()),
+                  MaterialPageRoute(builder: (context) => const AddClass()),
                 );
               },
               tooltip: 'Add Class',
@@ -226,7 +228,7 @@ class _AddClassState extends State<AddClass> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => TeacherAttendancePage()),
+                      builder: (context) => const TeacherAttendancePage()),
                 );
               },
               tooltip: 'Check Attendance',

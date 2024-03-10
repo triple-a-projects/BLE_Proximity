@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/info.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TeacherEmailAuth extends StatefulWidget {
-  const TeacherEmailAuth({Key? key}) : super(key: key);
+  const TeacherEmailAuth({super.key});
 
   @override
   State<TeacherEmailAuth> createState() => _TeacherEmailAuthState();
@@ -26,7 +27,7 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
       createUserDocument(userCredential.user!);
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => TeacherHomePage()),
+        MaterialPageRoute(builder: (context) => const TeacherHomePage()),
         (route) => false,
       );
     } on FirebaseAuthException catch (e) {
@@ -62,6 +63,10 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        textTheme: GoogleFonts.nunitoTextTheme(),
+        primarySwatch: Colors.blue,
+      ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
@@ -69,7 +74,7 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
           foregroundColor: Colors.white,
           actions: [
             IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.info_outlined,
                   color: lightest,
                   size: 30,
@@ -90,46 +95,53 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(20.0),
               child: TextField(
                 controller: emailController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Email',
                   labelText: 'Email',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(20.0),
               child: TextField(
                 controller: nameController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Name',
                   labelText: 'Name',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(20.0),
               child: TextField(
                 obscureText: true,
                 controller: passwordController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Password',
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
               ),
             ),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 signInWithEmailAndPassword();
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     left: 40,
                     right: 40,
                     top: 15,

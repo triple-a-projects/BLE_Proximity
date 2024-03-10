@@ -1,17 +1,16 @@
 //import 'package:ble_advertiser/login.dart';
 import 'package:ble_advertiser/colors.dart';
-import 'package:ble_advertiser/initialPage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:ble_advertiser/perspectives/student/login.dart';
-import 'package:ble_advertiser/perspectives/student/phone_auth.dart';
 import 'package:ble_advertiser/info.dart';
 
 class StudentPhoneAuth extends StatefulWidget {
-  const StudentPhoneAuth({Key? key}) : super(key: key);
+  const StudentPhoneAuth({super.key});
 
   @override
   State<StudentPhoneAuth> createState() => _StudentPhoneAuthState();
@@ -60,7 +59,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
         .then((value) => createUserDocument(value.user!));
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => StudentLoginPage()),
+      MaterialPageRoute(builder: (context) => const StudentLoginPage()),
       (route) => false,
     );
   }
@@ -88,6 +87,10 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        textTheme: GoogleFonts.nunitoTextTheme(),
+        primarySwatch: Colors.blue,
+      ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
@@ -95,7 +98,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
           foregroundColor: Colors.white,
           actions: [
             IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.info_outlined,
                   color: lightest,
                   size: 30,
@@ -107,15 +110,8 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                   );
                 })
           ],
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back, color: lightest, size: 35),
-          //   onPressed: () {
-          //     Navigator.push(context,
-          //         MaterialPageRoute(builder: (context) => ChooseRolePage()));
-          //   },
-          // ),
           title: const Text(
-            'Phone Authentication',
+            'Verify yourself',
           ),
           centerTitle: true,
         ),
@@ -123,9 +119,9 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 100),
+              const SizedBox(height: 100),
               Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(20.0),
                 child: TextField(
                   controller: rollNoController,
                   decoration: InputDecoration(
@@ -143,7 +139,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(20.0),
                 child: TextField(
                   controller: nameController,
                   decoration: InputDecoration(
@@ -161,7 +157,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(20.0),
                 child: IntlPhoneField(
                   showDropdownIcon: false,
                   controller: phoneController,
@@ -195,7 +191,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Visibility(
                   visible: otpFieldVisibility,
                   child: TextField(
@@ -205,7 +201,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                       labelText: 'OTP',
                       // labelStyle: TextStyle(color: darkest),
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(color: darkest),
+                        borderSide: const BorderSide(color: darkest),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       //    focusedBorder: OutlineInputBorder(
@@ -226,7 +222,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                   FocusManager.instance.primaryFocus?.unfocus();
                 },
                 style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       left: 40,
                       right: 40,
                       top: 15,
@@ -236,7 +232,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                     foregroundColor: Colors.white),
                 child: const Text('Verify'),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
             ],
           ),
         ),

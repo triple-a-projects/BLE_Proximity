@@ -1,9 +1,7 @@
 import 'package:ble_advertiser/colors.dart';
-import 'package:ble_advertiser/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:ble_advertiser/perspectives/student/login.dart';
 import 'package:ble_advertiser/perspectives/student/home.dart';
 import 'package:ble_advertiser/info.dart';
 
@@ -37,7 +35,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.info_outlined,
                 color: lightest,
                 size: 30,
@@ -49,38 +47,36 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
                 );
               })
         ],
-        title: const Text('Login Page for Student'),
+        title: const Text('Login as Student'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          // if (_supportState)
-          //   const Text('This device is supported')
-          // else
-          //   const Text('This device is not supported'),
-          // const Divider(
-          //   height: 100,
-          // ),
-          // ElevatedButton(
-          //     onPressed: _getAvailableBiometrics,
-          //     child: const Text("Get available biometrics")),
-          const Divider(
-            height: 100,
-          ),
-          ElevatedButton(
-            onPressed: _authenticate,
-            style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.only(
-                  left: 40,
-                  right: 40,
-                  top: 15,
-                  bottom: 15,
-                ),
-                backgroundColor: secondDark,
-                foregroundColor: Colors.white),
-            child: Text('Authenticate'),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'Login with Fingerprint',
+              style: TextStyle(
+                  fontSize: 30, color: darkest, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            const SizedBox(
+                width: 350,
+                child: Text(
+                  'Click on the icon below to authenticate yourself with your fingerprint and continue to the app.',
+                  textAlign: TextAlign.center,
+                )),
+            IconButton(
+              onPressed: _authenticate,
+              icon: const Icon(Icons.fingerprint_outlined),
+              iconSize: 300.0, // Adjust size as needed
+              tooltip: 'Authenticate with Biometrics',
+              color: secondDark,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -100,7 +96,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
         // Navigate to the main page
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => StudentHomePage()),
+          MaterialPageRoute(builder: (context) => const StudentHomePage()),
           (route) => false,
         );
       }

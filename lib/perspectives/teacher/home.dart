@@ -1,14 +1,13 @@
-import 'package:ble_advertiser/perspectives/teacher/attendance.dart';
 import 'package:ble_advertiser/perspectives/teacher/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
 import 'package:ble_advertiser/colors.dart';
-import 'package:ble_advertiser/perspectives/teacher/check_attendance.dart';
 import 'package:ble_advertiser/info.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TeacherHomePage extends StatefulWidget {
-  const TeacherHomePage({Key? key});
+  const TeacherHomePage({super.key});
 
   @override
   _TeacherHomePageState createState() => _TeacherHomePageState();
@@ -27,7 +26,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.info_outlined,
                 color: lightest,
                 size: 30,
@@ -57,7 +56,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -93,21 +92,25 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                           children: [
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(
-                                subjectName,
-                                style: const TextStyle(
-                                    fontSize: 20, color: Colors.black),
-                                textAlign: TextAlign.start,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, top: 5),
+                                child: Text(
+                                  subjectName,
+                                  style: const TextStyle(
+                                      fontSize: 20, color: Colors.black),
+                                  textAlign: TextAlign.start,
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 5),
                             Align(
                               alignment: Alignment.centerRight,
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: middle,
-                                  textStyle: const TextStyle(
+                                  textStyle: GoogleFonts.nunito(
                                       fontSize: 20, color: Colors.black),
                                 ),
                                 child: const Text('Start Class',
@@ -152,7 +155,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddClass()),
+                  MaterialPageRoute(builder: (context) => const AddClass()),
                 );
               },
               tooltip: 'Add Class',
@@ -167,7 +170,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddClass()),
+                  MaterialPageRoute(builder: (context) => const AddClass()),
                 );
               },
               tooltip: 'Check Attendance',
@@ -179,9 +182,9 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
       drawer: Drawer(
         child: ListView(
           children: [
-            Container(
+            const SizedBox(
               height: 100,
-              child: const DrawerHeader(
+              child: DrawerHeader(
                 decoration: BoxDecoration(
                   color: darkest,
                 ),
@@ -201,7 +204,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => TeacherSettingsPage()),
+                      builder: (context) => const TeacherSettingsPage()),
                 );
               },
             ),

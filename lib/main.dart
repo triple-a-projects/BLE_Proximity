@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:async';
+import 'package:ble_advertiser/colors.dart';
+import 'package:ble_advertiser/info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ble_advertiser/initialPage.dart';
@@ -9,7 +11,7 @@ import 'package:ble_advertiser/perspectives/student/home.dart';
 import 'package:ble_advertiser/perspectives/student/login.dart';
 import 'package:ble_advertiser/perspectives/student/phone_auth.dart';
 import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ble_advertiser/perspectives/teacher/check_attendance.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:ble_advertiser/perspectives/teacher/email_auth.dart';
@@ -28,35 +30,40 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '': (context) => ChooseRolePage(),
-        '/student_phoneauth': (context) => StudentPhoneAuth(),
-        '/student_login': (context) => StudentLoginPage(),
-        '/student_home': (context) => StudentHomePage(),
-        '/student_checkattendance': (context) => StudentAttendancePage(),
-        '/teacher_emailauth': (context) => TeacherEmailAuth(),
-        '/teacher_home': (context) => TeacherHomePage(),
-        '/teacher_checkattendance': (context) => TeacherAttendancePage(),
-        '/teacher_addclass': (context) => AddClass(),
+        '': (context) => const ChooseRolePage(),
+        '/student_phoneauth': (context) => const StudentPhoneAuth(),
+        '/student_login': (context) => const StudentLoginPage(),
+        '/student_home': (context) => const StudentHomePage(),
+        '/student_checkattendance': (context) => const StudentAttendancePage(),
+        '/teacher_emailauth': (context) => const TeacherEmailAuth(),
+        '/teacher_home': (context) => const TeacherHomePage(),
+        '/teacher_checkattendance': (context) => const TeacherAttendancePage(),
+        '/teacher_addclass': (context) => const AddClass(),
       },
       debugShowCheckedModeBanner: false,
       title: 'BLE Peripheral',
       theme: ThemeData(
+        textTheme: GoogleFonts.nunitoTextTheme(),
         primarySwatch: Colors.blue,
       ),
-      home: ChooseRolePage(),
+      home: const ChooseRolePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -64,7 +71,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool isAdvertising = false;
   Timer? advertiseTime;
-  String uniqueUUID = Uuid().v4();
+  String uniqueUUID = const Uuid().v4();
   String rollNumber = '';
 
   @override
@@ -103,14 +110,37 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('BLE Peripheral'),
+          title: const Text('Attend Class'),
+          backgroundColor: darkest,
+          foregroundColor: Colors.white,
+          automaticallyImplyLeading: true,
+          actions: [
+            IconButton(
+                icon: const Icon(
+                  Icons.info_outlined,
+                  color: lightest,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InfoPage()),
+                  );
+                })
+          ],
         ),
-        body: ListView(
-          padding: const EdgeInsets.all(8),
-          children: <Widget>[
-            Text(rollNumber),
-            Container(
-              child: TextButton(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'ROLL NUMBER: \n $rollNumber',
+                style: const TextStyle(
+                    fontSize: 30, color: darkest, fontWeight: FontWeight.w600),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 50),
+              ElevatedButton(
                 onPressed: () {
                   if (isAdvertising) {
                     stopAdvertising();
@@ -118,11 +148,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     startAdvertising();
                   }
                 },
-                child: Text(
-                    isAdvertising ? 'Stop Advertising' : 'Start Advertising'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: middle,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.only(
+                    top: 15,
+                    bottom: 15,
+                    right: 50,
+                    left: 50,
+                  ),
+                ),
+                child:
+                    Text(isAdvertising ? 'Stop Attending' : 'Start Attending'),
               ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 
@@ -138,7 +178,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     AdvertiseSetParameters advertiseSetParameters = AdvertiseSetParameters();
-    advertiseTime = Timer.periodic(Duration(seconds: 5), (timer) {
+    advertiseTime = Timer.periodic(const Duration(seconds: 5), (timer) {
       try {
         FlutterBlePeripheral().start(
             advertiseData: advertiseData,
@@ -165,7 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   String generateUUIDRollNumber(String rollNumber) {
-    String uniqueUUID = Uuid().v5(Uuid.NAMESPACE_URL, rollNumber);
+    String uniqueUUID = const Uuid().v5(Uuid.NAMESPACE_URL, rollNumber);
     String serviceDataUUID = '0000$uniqueUUID-0000-1000-8000-00805f9b34fb';
     String serviceRollNumber = serviceDataUUID.replaceAll('-', '');
     return serviceRollNumber;

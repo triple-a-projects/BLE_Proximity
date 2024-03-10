@@ -1,11 +1,10 @@
 import 'package:ble_advertiser/colors.dart';
-import 'package:ble_advertiser/main.dart';
 import 'package:ble_advertiser/perspectives/student/home.dart';
 import 'package:flutter/material.dart';
 import 'package:ble_advertiser/info.dart';
 
 class StudentSettingsPage extends StatefulWidget {
-  const StudentSettingsPage({Key? key}) : super(key: key);
+  const StudentSettingsPage({super.key});
 
   @override
   _StudentSettingsPageState createState() => _StudentSettingsPageState();
@@ -19,12 +18,12 @@ class _StudentSettingsPageState extends State<StudentSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
         backgroundColor: darkest,
         foregroundColor: Colors.white,
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.info_outlined,
               color: lightest,
               size: 30,
@@ -32,7 +31,7 @@ class _StudentSettingsPageState extends State<StudentSettingsPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => InfoPage()),
+                MaterialPageRoute(builder: (context) => const InfoPage()),
               );
             },
           )
@@ -43,12 +42,12 @@ class _StudentSettingsPageState extends State<StudentSettingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Notifications',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SwitchListTile(
-              title: Text('Receive Notifications'),
+              title: const Text('Receive Notifications'),
               activeColor: secondDark,
               value: notificationSwitchValue,
               onChanged: (value) {
@@ -57,8 +56,8 @@ class _StudentSettingsPageState extends State<StudentSettingsPage> {
                 });
               },
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Volume',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
@@ -75,25 +74,26 @@ class _StudentSettingsPageState extends State<StudentSettingsPage> {
               label: volumeSliderValue.round().toString(),
               activeColor: secondDark,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => StudentHomePage()),
+                  MaterialPageRoute(
+                      builder: (context) => const StudentHomePage()),
                 );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: middle,
                 foregroundColor: Colors.white,
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 50,
                   right: 50,
                   top: 15,
                   bottom: 15,
                 ),
               ),
-              child: Text('Save Settings'),
+              child: const Text('Save Settings'),
             ),
           ],
         ),

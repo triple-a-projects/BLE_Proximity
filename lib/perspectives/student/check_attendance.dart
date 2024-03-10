@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ble_advertiser/colors.dart';
-import 'package:ble_advertiser/main.dart';
-import 'package:ble_advertiser/perspectives/student/home.dart';
 import 'package:ble_advertiser/info.dart';
 
 class StudentAttendancePage extends StatefulWidget {
-  const StudentAttendancePage({Key? key}) : super(key: key);
+  const StudentAttendancePage({super.key});
 
   @override
   _StudentAttendancePageState createState() => _StudentAttendancePageState();
@@ -25,7 +23,7 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.info_outlined,
                 color: lightest,
                 size: 30,
@@ -43,7 +41,7 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
         future: FirebaseFirestore.instance.collection('subjects').get(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(
+            return const CircularProgressIndicator(
               color: Colors.white,
             );
           }
@@ -72,17 +70,17 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            '$subjectName',
+                            subjectName,
                             style: const TextStyle(
                                 fontSize: 18, color: Colors.black),
                           ),
                         ],
                       ),
-                      subtitle: Row(
+                      subtitle: const Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            'Your Attendance',
+                            'Your Attendance: 0%',
                             style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                         ],

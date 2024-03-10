@@ -1,13 +1,34 @@
+import 'package:ble_advertiser/colors.dart';
+import 'package:ble_advertiser/info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AttendanceTable extends StatelessWidget {
+  const AttendanceTable({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Attendance'),
+        title: const Text('Attendance'),
+        backgroundColor: darkest,
+        foregroundColor: Colors.white,
+        automaticallyImplyLeading: true,
+        actions: [
+          IconButton(
+              icon: const Icon(
+                Icons.info_outlined,
+                color: lightest,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InfoPage()),
+                );
+              })
+        ],
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -15,7 +36,7 @@ class AttendanceTable extends StatelessWidget {
           future: FirebaseFirestore.instance.collection('users').get(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator(
+              return const CircularProgressIndicator(
                   color: Colors
                       .white); // Show a loading indicator while fetching data
             }
@@ -26,13 +47,13 @@ class AttendanceTable extends StatelessWidget {
             final users = snapshot.data!.docs;
             return DataTable(
               columns: <DataColumn>[
-                DataColumn(
+                const DataColumn(
                   label: Text(
                     'Roll No',
                     style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ),
-                DataColumn(
+                const DataColumn(
                   label: Text(
                     'Name',
                     style: TextStyle(fontStyle: FontStyle.italic),
@@ -40,13 +61,13 @@ class AttendanceTable extends StatelessWidget {
                 ),
                 DataColumn(
                   label: Text(
-                    'Phone Number',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                    DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                    style: const TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ),
-                DataColumn(
+                const DataColumn(
                   label: Text(
-                    DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                    'Phone Number',
                     style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ),
@@ -57,9 +78,9 @@ class AttendanceTable extends StatelessWidget {
                   cells: <DataCell>[
                     DataCell(Text(users[index]['rollNo'])),
                     DataCell(Text(users[index]['name'])),
+                    DataCell(Text(users[index]['present'])),
                     DataCell(Text(users[index]['phoneNo'])),
-                    DataCell(Text(
-                        users[index]['phoneNo'])), // Placeholder for attendance
+                    // Placeholder for attendance
                   ],
                 ),
               ),
@@ -69,10 +90,4 @@ class AttendanceTable extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: AttendanceTable(),
-  ));
 }

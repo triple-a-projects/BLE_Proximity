@@ -7,7 +7,7 @@ import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
 import 'package:ble_advertiser/info.dart';
 
 class TeacherAttendancePage extends StatelessWidget {
-  TeacherAttendancePage({Key? key}) : super(key: key);
+  const TeacherAttendancePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class TeacherAttendancePage extends StatelessWidget {
         automaticallyImplyLeading: true,
         actions: [
           IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.info_outlined,
                 color: lightest,
                 size: 30,
@@ -43,7 +43,7 @@ class TeacherAttendancePage extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -84,7 +84,7 @@ class TeacherAttendancePage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    AttendanceTable())); // Handle onTap
+                                    const AttendanceTable())); // Handle onTap
                       },
                       child: const Icon(Icons.edit, color: Colors.black),
                     ),
@@ -122,7 +122,7 @@ class TeacherAttendancePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddClass()),
+                  MaterialPageRoute(builder: (context) => const AddClass()),
                 );
               },
               tooltip: 'Add Class',
@@ -138,7 +138,7 @@ class TeacherAttendancePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => TeacherAttendancePage()),
+                      builder: (context) => const TeacherAttendancePage()),
                 );
               },
               tooltip: 'Check Attendance',
