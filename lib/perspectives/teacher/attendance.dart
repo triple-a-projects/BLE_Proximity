@@ -100,10 +100,16 @@ class _AttendanceTableState extends State<AttendanceTable> {
                           Row(
                             children: [
                               FutureBuilder(
-                                future: FirebaseFirestore.instance.collection('users').doc(users[index].id).get(),
-                                builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                    return CircularProgressIndicator(color: Colors.white);
+                                future: FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(users[index].id)
+                                    .get(),
+                                builder: (context,
+                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return CircularProgressIndicator(
+                                        color: Colors.white);
                                   }
                                   if (snapshot.hasError) {
                                     return Text('Error: ${snapshot.error}');
@@ -112,19 +118,25 @@ class _AttendanceTableState extends State<AttendanceTable> {
                                   return DropdownButton<String>(
                                     onChanged: (String? newValue) async {
                                       if (newValue != null) {
-                                        bool updatedValue = newValue == 'P' ? true : false;
+                                        bool updatedValue =
+                                            newValue == 'P' ? true : false;
                                         // Update the Firestore document with the selected value
-                                        await firestore.collection('users').doc(users[index].id).update({
+                                        await firestore
+                                            .collection('users')
+                                            .doc(users[index].id)
+                                            .update({
                                           'present': updatedValue,
-                                        }).then((_){
+                                        }).then((_) {
                                           setState(() {
-                                            present=updatedValue;
+                                            present = updatedValue;
                                           });
                                         });
                                       }
                                     },
                                     value: present == true ? 'P' : 'A',
-                                    items: <String>['A', 'P'].map<DropdownMenuItem<String>>((String value) {
+                                    items: <String>['A', 'P']
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
                                         child: Text(value),

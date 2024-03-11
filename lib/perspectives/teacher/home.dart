@@ -1,6 +1,7 @@
 import 'package:ble_advertiser/perspectives/student/student_base.dart';
 import 'package:ble_advertiser/perspectives/teacher/settings.dart';
 import 'package:ble_advertiser/perspectives/teacher/teacher_base.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
@@ -41,7 +42,8 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
 
           final List<DocumentSnapshot> documents = snapshot.data!.docs;
 
-          return Column(
+          return SingleChildScrollView(
+              child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -103,7 +105,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                 ),
               ),
             ],
-          );
+          ));
         },
       ),
     ); //BasePage

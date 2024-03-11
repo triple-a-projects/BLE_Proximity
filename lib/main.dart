@@ -24,6 +24,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ble_peripheral/flutter_ble_peripheral.dart';
 import 'package:uuid/uuid.dart';
+import 'package:ble_advertiser/animation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -122,9 +123,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   size: 30,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => InfoPage()),
+                  Navigator.of(context).push(
+                    PageTransitionAnimation(
+                      page: InfoPage(),
+                    ),
                   );
                 })
           ],
@@ -149,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: middle,
+                  backgroundColor: secondDark,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.only(
                     top: 15,
@@ -161,6 +163,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 child:
                     Text(isAdvertising ? 'Stop Attending' : 'Start Attending'),
               ),
+              if (isAdvertising)
+                const SizedBox(
+                    height: 50,
+                    child: Center(
+                      child: Text('You are attending the class...',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.green,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold)),
+                    ))
             ],
           ),
         ));

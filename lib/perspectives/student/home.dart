@@ -70,10 +70,15 @@ class _StudentHomePageState extends State<StudentHomePage> {
                       subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            '$teacherName',
-                            style: TextStyle(fontSize: 15, color: Colors.black),
-                          ),
+                          Flexible(
+                            child: Text(
+                              '$teacherName',
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                              ),
+                            ),
+                          )
                         ],
                       ),
                       trailing: SizedBox(
