@@ -66,7 +66,7 @@ class _AddClassState extends State<AddClass> {
         'subject': selectedSubject,
         'faculty': selectedFaculty,
         'semester': selectedSemester,
-        'teacher': teacherName, // Add teacher's name to the document
+        'teacherName': teacherName, // Add teacher's name to the document
       });
       print('Class added successfully.');
     } catch (e) {
