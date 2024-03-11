@@ -14,6 +14,7 @@ class StudentAttendancePage extends StatefulWidget {
 class _StudentAttendancePageState extends State<StudentAttendancePage> {
   int _currentPageIndex =
       1; // Set the initial page index to 1 for Check Attendance
+  List<bool> isExpandedList = List<bool>.generate(10, (index) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -33,49 +34,92 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
           }
           final subjects = snapshot.data!.docs;
           return ListView.builder(
-              itemCount: subjects.length,
-              itemBuilder: (context, index) {
-                String subjectName = subjects[index]['subject'];
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                    bottom: 8,
-                    right: 10,
-                    left: 10,
-                  ),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    color: lightest,
-                    child: ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Flexible(child: 
-                          Text(
-                            subjectName,
-                            style: const TextStyle(
-                                fontSize: 18, color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          )
-                        ],
-                      ),
-                      subtitle: const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Your Attendance: 0%',
-                            style: TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              });
+            itemCount: subjects.length,
+            itemBuilder: (context, index) {
+              String subjectName = subjects[index]['subject'];
+              return Padding(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                  bottom: 8,
+                  right: 10,
+                  left: 10,
+                ),
+                child: SubjectCard(subjectName: subjectName),
+              );
+            },
+          );
         },
+      ),
+    );
+  }
+}
+
+class SubjectCard extends StatefulWidget {
+  final String subjectName;
+
+  const SubjectCard({Key? key, required this.subjectName}) : super(key: key);
+
+  @override
+  _SubjectCardState createState() => _SubjectCardState();
+}
+
+class _SubjectCardState extends State<SubjectCard> {
+  bool isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      color: lightest,
+      child: Column(
+        children: [
+          ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Flexible(
+                  child: Text(
+                    widget.subjectName,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            trailing: GestureDetector(
+              onTap: () {
+                setState(() {
+                  isExpanded = !isExpanded;
+                });
+              },
+              child: Icon(
+                isExpanded ? Icons.visibility_off : Icons.visibility,
+                color: darkest,
+              ),
+            ),
+          ),
+          Visibility(
+            visible: isExpanded,
+            child: const SizedBox(
+              height: 50,
+              child: Padding(
+                padding: EdgeInsets.all(5),
+                child: Text(
+                  'Classes you attended: ',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

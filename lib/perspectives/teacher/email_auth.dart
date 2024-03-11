@@ -82,10 +82,10 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
                 ),
                 onPressed: () {
                   Navigator.of(context).push(
-                  PageTransitionAnimation(
-                    page: InfoPage(),
-                  ),
-                );
+                    PageTransitionAnimation(
+                      page: InfoPage(),
+                    ),
+                  );
                 })
           ],
           title: const Text(
@@ -97,9 +97,11 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height:120),
+              SizedBox(height: 120),
               Padding(
-                padding: const EdgeInsets.all(20,),
+                padding: const EdgeInsets.all(
+                  20,
+                ),
                 child: TextField(
                   controller: emailController,
                   decoration: InputDecoration(
@@ -157,10 +159,8 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
               ),
               SizedBox(height: 120),
             ],
-            
           ),
-        // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          
+          // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         ),
       ),
     );

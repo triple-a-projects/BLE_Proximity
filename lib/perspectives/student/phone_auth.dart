@@ -105,11 +105,11 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                   size: 30,
                 ),
                 onPressed: () {
-                   Navigator.of(context).push(
-                  PageTransitionAnimation(
-                    page: InfoPage(),
-                  ),
-                );
+                  Navigator.of(context).push(
+                    PageTransitionAnimation(
+                      page: InfoPage(),
+                    ),
+                  );
                 })
           ],
           title: const Text(

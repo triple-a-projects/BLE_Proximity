@@ -58,10 +58,12 @@ class _StudentHomePageState extends State<StudentHomePage> {
                         children: [
                           Flexible(
                             child: Text(
-                            '$subjectName',
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
-                          ),
+                              '$subjectName',
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           )
                         ],
                       ),
@@ -81,10 +83,10 @@ class _StudentHomePageState extends State<StudentHomePage> {
                           child: ElevatedButton(
                             onPressed: () {
                               Navigator.of(context).push(
-                  PageTransitionAnimation(
-                    page: MyHomePage(),
-                  ),
-                );
+                                PageTransitionAnimation(
+                                  page: MyHomePage(),
+                                ),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: middle,
