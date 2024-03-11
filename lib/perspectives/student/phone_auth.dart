@@ -23,6 +23,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
   final TextEditingController otpController = TextEditingController();
   final TextEditingController rollNoController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController semesterController = TextEditingController();
   String userNumber = '';
   var otpFieldVisibility = false;
   var receivedID = '';
@@ -73,10 +74,12 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
           FirebaseFirestore.instance.collection('users');
 
       // Create a new document with the user's UID
-      await users.doc(user.uid).set({
+      await users.doc(rollNoController.text).set({
         'rollNo': rollNoController.text,
         'name': nameController.text,
+        'semester': semesterController.text,
         'phoneNo': phoneController.text,
+        'present': false
       });
 
       print('User document created in Firestore successfully.');
@@ -127,7 +130,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                 child: TextField(
                   controller: rollNoController,
                   decoration: InputDecoration(
-                    hintText: 'Roll Number',
+                    hintText: '077bei001',
                     labelText: 'Roll No',
                     // labelStyle: TextStyle(color: darkest),
                     border: OutlineInputBorder(
@@ -145,8 +148,26 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                 child: TextField(
                   controller: nameController,
                   decoration: InputDecoration(
-                    hintText: 'Name',
+                    hintText: 'John Doe',
                     labelText: 'Name',
+                    // labelStyle: TextStyle(color: darkest),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    //  focusedBorder: OutlineInputBorder(
+                    //   borderRadius: BorderRadius.circular(15),
+                    //   borderSide: BorderSide(color: darkest),
+                    // )
+                  ),
+                ),
+              ),
+                           Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: TextField(
+                  controller: semesterController,
+                  decoration: InputDecoration(
+                    hintText: 'III/II',
+                    labelText: 'Semester',
                     // labelStyle: TextStyle(color: darkest),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -175,7 +196,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                     )
                   ], // Restrict to Nepal
                   decoration: InputDecoration(
-                    hintText: 'Phone Number',
+                    hintText: '9841000000',
                     labelText: 'Phone',
                     // labelStyle: TextStyle(color: darkest),
                     border: OutlineInputBorder(
