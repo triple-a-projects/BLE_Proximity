@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:ble_advertiser/colors.dart';
+
 import 'package:ble_advertiser/perspectives/teacher/check_attendance.dart';
 import 'package:ble_advertiser/info.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class AddClass extends StatefulWidget {
   const AddClass({super.key});
@@ -18,6 +20,8 @@ class _AddClassState extends State<AddClass> {
   String? selectedSubject;
   String? selectedFaculty;
   String? selectedSemester;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController customSubjectController = TextEditingController();
 
   List<String> subjects = [
     'Communication English',
@@ -25,12 +29,12 @@ class _AddClassState extends State<AddClass> {
     'Project Management',
     'Embedded System',
     'Propagation and Antenna',
-    // 'Object Oriented Software Engineering'
+    'Object Oriented Software Engineering',
   ];
 
   List<String> faculties = [
-    'BCT',
     'BEI',
+    'BCT',
     'BCE',
     'BArch',
     'BME',
@@ -63,10 +67,30 @@ class _AddClassState extends State<AddClass> {
 
       // Add the subject document with all the fields
       await FirebaseFirestore.instance.collection('subjects').add({
-        'subject': selectedSubject,
+        'subject': customSubjectController.text,
         'faculty': selectedFaculty,
         'semester': selectedSemester,
-        'teacher': teacherName, // Add teacher's name to the document
+        'teacherName': teacherName, // Add teacher's name to the document
+      });
+      // Show "Added successfully" message using SnackBar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.check, color: Colors.white),
+              SizedBox(width: 8),
+              Text('Subject Added successfully'),
+            ],
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      // Clear input fields after successful addition
+      setState(() {
+        customSubjectController.clear();
+        selectedFaculty = faculties.first;
+        selectedSemester = semesters.length >= 6 ? semesters[5] : null;
       });
       print('Class added successfully.');
     } catch (e) {
@@ -78,6 +102,7 @@ class _AddClassState extends State<AddClass> {
   Widget build(BuildContext context) {
     return TeacherBasePage(
         title: 'Add Subject',
+        key: _scaffoldKey,
         currentPageIndex: 1,
         buildBody: (context) {
           return Padding(
@@ -85,27 +110,41 @@ class _AddClassState extends State<AddClass> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                DropdownButtonFormField<String>(
-                  value: selectedSubject,
-                  onChanged: (newValue) {
+                const SizedBox(height: 16),
+                TypeAheadField<String>(
+                  textFieldConfiguration: TextFieldConfiguration(
+                    controller: customSubjectController,
+                    decoration: InputDecoration(
+                      labelText: 'Subject',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  suggestionsCallback: (pattern) {
+                    return subjects.where((subject) => subject
+                        .toLowerCase()
+                        .startsWith(pattern.toLowerCase()));
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      title: Text(suggestion),
+                    );
+                  },
+                  onSuggestionSelected: (suggestion) {
                     setState(() {
-                      selectedSubject = newValue;
+                      selectedSubject = suggestion;
                     });
                   },
-                  items: subjects.map((subject) {
-                    return DropdownMenuItem<String>(
-                      value: subject,
-                      child: Text(subject),
-                    );
-                  }).toList(),
-                  decoration: const InputDecoration(
-                    labelText: 'Subject',
-                    border: OutlineInputBorder(),
-                  ),
+                  noItemsFoundBuilder: (context) {
+                    return Text('New Subject will be Added');
+                  },
                 ),
-                const SizedBox(height: 20),
+                
+
+                const SizedBox(height: 16),
+                
                 DropdownButtonFormField<String>(
-                  value: selectedFaculty,
+                  value: selectedFaculty ,
+                  // ?? faculties.first,
                   onChanged: (newValue) {
                     setState(() {
                       selectedFaculty = newValue;
@@ -124,7 +163,9 @@ class _AddClassState extends State<AddClass> {
                 ),
                 const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
-                  value: selectedSemester,
+                  value: selectedSemester, 
+                  // ??
+                  //     (semesters.length >= 6 ? semesters[5] : null),
                   onChanged: (newValue) {
                     setState(() {
                       selectedSemester = newValue;
@@ -158,7 +199,7 @@ class _AddClassState extends State<AddClass> {
                   },
                   child: const Text(
                     'Submit',
-                    style: TextStyle(color: lightest),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],

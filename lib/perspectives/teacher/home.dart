@@ -87,7 +87,21 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Row(
+                                children: [
+                                  Icon(Icons.check, color: Colors.white),
+                                  SizedBox(width: 8),
+                                  Text('Class Started successfully'),
+                                ],
+                              ),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: middle,
                                   textStyle: GoogleFonts.nunito(
