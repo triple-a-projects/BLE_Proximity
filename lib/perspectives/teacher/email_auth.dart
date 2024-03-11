@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ble_advertiser/info.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ble_advertiser/animation.dart';
 
 class TeacherEmailAuth extends StatefulWidget {
   const TeacherEmailAuth({super.key});
@@ -80,10 +81,11 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
                   size: 30,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => InfoPage()),
-                  );
+                  Navigator.of(context).push(
+                  PageTransitionAnimation(
+                    page: InfoPage(),
+                  ),
+                );
                 })
           ],
           title: const Text(
@@ -91,67 +93,74 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
           ),
           centerTitle: true,
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                  labelText: 'Email',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height:120),
+              Padding(
+                padding: const EdgeInsets.all(20,),
+                child: TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    labelText: 'Email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  hintText: 'Name',
-                  labelText: 'Name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    hintText: 'Name',
+                    labelText: 'Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextField(
-                obscureText: true,
-                controller: passwordController,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  labelText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: TextField(
+                  obscureText: true,
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    labelText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                signInWithEmailAndPassword();
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.only(
-                    left: 40,
-                    right: 40,
-                    top: 15,
-                    bottom: 15,
-                  ),
-                  backgroundColor: secondDark,
-                  foregroundColor: Colors.white),
-              child: const Text('Sign In'),
-            )
-          ],
+              const SizedBox(height: 40),
+              ElevatedButton(
+                onPressed: () {
+                  signInWithEmailAndPassword();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.only(
+                      left: 40,
+                      right: 40,
+                      top: 15,
+                      bottom: 15,
+                    ),
+                    backgroundColor: secondDark,
+                    foregroundColor: Colors.white),
+                child: const Text('Sign In'),
+              ),
+              SizedBox(height: 120),
+            ],
+            
+          ),
+        // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          
         ),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:ble_advertiser/perspectives/student/home.dart';
 import 'package:ble_advertiser/info.dart';
+import 'package:ble_advertiser/animation.dart';
 
 class StudentLoginPage extends StatefulWidget {
   const StudentLoginPage({super.key});
@@ -41,9 +42,10 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
                 size: 30,
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InfoPage()),
+                Navigator.of(context).push(
+                  PageTransitionAnimation(
+                    page: InfoPage(),
+                  ),
                 );
               })
         ],

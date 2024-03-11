@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:ble_advertiser/perspectives/student/login.dart';
 import 'package:ble_advertiser/info.dart';
+import 'package:ble_advertiser/animation.dart';
 
 class StudentPhoneAuth extends StatefulWidget {
   const StudentPhoneAuth({super.key});
@@ -104,10 +105,11 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                   size: 30,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => InfoPage()),
-                  );
+                   Navigator.of(context).push(
+                  PageTransitionAnimation(
+                    page: InfoPage(),
+                  ),
+                );
                 })
           ],
           title: const Text(

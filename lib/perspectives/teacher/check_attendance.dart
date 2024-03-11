@@ -6,6 +6,7 @@ import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
 import 'package:ble_advertiser/info.dart';
+import 'package:ble_advertiser/animation.dart';
 
 class TeacherAttendancePage extends StatelessWidget {
   const TeacherAttendancePage({super.key});
@@ -62,11 +63,11 @@ class TeacherAttendancePage extends StatelessWidget {
                     ),
                     trailing: GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const AttendanceTable())); // Handle onTap
+                        Navigator.of(context).push(
+                  PageTransitionAnimation(
+                    page: AttendanceTable(),
+                  ),
+                ); // Handle onTap
                       },
                       child: const Icon(Icons.edit, color: Colors.black),
                     ),

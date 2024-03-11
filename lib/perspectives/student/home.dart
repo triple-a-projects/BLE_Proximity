@@ -6,6 +6,7 @@ import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/main.dart';
 // import 'package:student/check_attendance.dart';
 import 'package:ble_advertiser/info.dart';
+import 'package:ble_advertiser/animation.dart';
 
 class StudentHomePage extends StatefulWidget {
   const StudentHomePage({Key? key}) : super(key: key);
@@ -55,11 +56,13 @@ class _StudentHomePageState extends State<StudentHomePage> {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
+                          Flexible(
+                            child: Text(
                             '$subjectName',
                             style: const TextStyle(
-                                fontSize: 15, color: Colors.black),
+                                fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
                           ),
+                          )
                         ],
                       ),
                       subtitle: Row(
@@ -77,11 +80,11 @@ class _StudentHomePageState extends State<StudentHomePage> {
                           alignment: Alignment.bottomRight,
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MyHomePage()),
-                              );
+                              Navigator.of(context).push(
+                  PageTransitionAnimation(
+                    page: MyHomePage(),
+                  ),
+                );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: middle,

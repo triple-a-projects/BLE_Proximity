@@ -2,6 +2,7 @@ import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/perspectives/student/home.dart';
 import 'package:flutter/material.dart';
 import 'package:ble_advertiser/info.dart';
+import 'package:ble_advertiser/animation.dart';
 
 class StudentSettingsPage extends StatefulWidget {
   const StudentSettingsPage({super.key});
@@ -29,10 +30,11 @@ class _StudentSettingsPageState extends State<StudentSettingsPage> {
               size: 30,
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const InfoPage()),
-              );
+               Navigator.of(context).push(
+                  PageTransitionAnimation(
+                    page: InfoPage(),
+                  ),
+                );
             },
           )
         ],
@@ -77,10 +79,10 @@ class _StudentSettingsPageState extends State<StudentSettingsPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const StudentHomePage()),
+                 Navigator.of(context).push(
+                  PageTransitionAnimation(
+                    page: StudentHomePage(),
+                  ),
                 );
               },
               style: ElevatedButton.styleFrom(

@@ -144,7 +144,7 @@ class _AddClassState extends State<AddClass> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: middle,
+                    backgroundColor: secondDark,
                     foregroundColor: darkest,
                     padding: const EdgeInsets.only(
                       left: 50,
@@ -158,7 +158,7 @@ class _AddClassState extends State<AddClass> {
                   },
                   child: const Text(
                     'Submit',
-                    style: TextStyle(color: darkest),
+                    style: TextStyle(color: lightest),
                   ),
                 ),
               ],
