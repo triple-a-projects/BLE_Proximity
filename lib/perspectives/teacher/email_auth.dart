@@ -7,6 +7,8 @@ import 'package:ble_advertiser/info.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ble_advertiser/animation.dart';
 
+String currentTeacher = '';
+
 class TeacherEmailAuth extends StatefulWidget {
   const TeacherEmailAuth({super.key});
 
@@ -117,6 +119,10 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
                 padding: const EdgeInsets.all(20.0),
                 child: TextField(
                   controller: nameController,
+                  onChanged: (value) {
+                    currentTeacher =
+                        value; // Update the global value when text changes
+                  },
                   decoration: InputDecoration(
                     hintText: 'Name',
                     labelText: 'Name',

@@ -1,15 +1,15 @@
 import 'package:ble_advertiser/perspectives/teacher/attendance.dart';
+import 'package:ble_advertiser/perspectives/teacher/email_auth.dart';
 import 'package:ble_advertiser/perspectives/teacher/teacher_base.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:ble_advertiser/colors.dart';
-import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
+import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:ble_advertiser/info.dart';
 import 'package:ble_advertiser/animation.dart';
 
 class TeacherAttendancePage extends StatelessWidget {
-  const TeacherAttendancePage({super.key});
+  const TeacherAttendancePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,7 @@ class TeacherAttendancePage extends StatelessWidget {
               final Map<String, dynamic> data =
                   documents[index].data() as Map<String, dynamic>;
               final String subjectName = data['subject'];
-              final String teacherName = data[
-                  'teacherName']; // Retrieve teacher's name from the subject data
+              final String teacherName = data['teacherName'];
               return FutureBuilder<bool>(
                 future: isTeacherAssociatedWithSubject(teacherName),
                 builder: (context, teacherAssociatedSnapshot) {
@@ -105,10 +104,6 @@ class TeacherAttendancePage extends StatelessWidget {
   }
 
   Future<bool> isTeacherAssociatedWithSubject(String teacherName) async {
-    final teachersCollection =
-        FirebaseFirestore.instance.collection('teachers');
-    final querySnapshot =
-        await teachersCollection.where('name', isEqualTo: teacherName).get();
-    return querySnapshot.docs.isNotEmpty;
+    return teacherName == currentTeacher;
   }
 }
