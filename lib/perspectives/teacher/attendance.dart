@@ -102,6 +102,7 @@ class AttendanceTable extends StatelessWidget {
                   (index) => DataRow(
                     cells: <DataCell>[
                       DataCell(Text(users[index]['rollNo'])),
+                      DataCell(Text(users[index]['name'])),
                       DataCell(Text(users[index]['present']== true ? 'P' : 'A',)),
                       DataCell(Text(users[index]['phoneNo'])),
                     ],
