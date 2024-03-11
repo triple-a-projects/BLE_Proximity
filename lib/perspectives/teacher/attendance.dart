@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:ble_advertiser/animation.dart';
 
 class AttendanceTable extends StatelessWidget {
   const AttendanceTable({super.key});
@@ -42,15 +43,19 @@ class AttendanceTable extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InfoPage()),
+                Navigator.of(context).push(
+                  PageTransitionAnimation(
+                    page: InfoPage(),
+                  ),
                 );
               })
         ],
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+        
         child: FutureBuilder(
           future: FirebaseFirestore.instance.collection('users').get(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -73,34 +78,32 @@ class AttendanceTable extends StatelessWidget {
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
-                //   const DataColumn(
-                //     label: Text(
-                //       'Name',
-                //       style: TextStyle(fontStyle: FontStyle.italic),
-                //     ),
-                //   ),
+                  const DataColumn(
+                    label: Text(
+                      'Name',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
                   DataColumn(
                     label: Text(
                       DateFormat('yyyy-MM-dd').format(DateTime.now()),
                       style: const TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
-                //   const DataColumn(
-                //     label: Text(
-                //       'Phone Number',
-                //       style: TextStyle(fontStyle: FontStyle.italic),
-                //     ),
-                //   ),
+                  const DataColumn(
+                    label: Text(
+                      'Phone Number',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
                 ],
                 rows: List<DataRow>.generate(
                   users.length,
                   (index) => DataRow(
                     cells: <DataCell>[
                       DataCell(Text(users[index]['rollNo'])),
-                      // DataCell(Text(users[index]['name'])),
                       DataCell(Text(users[index]['present']== true ? 'P' : 'A',)),
-                      // DataCell(Text(users[index]['phoneNo'])),
-                      // Placeholder for attendance
+                      DataCell(Text(users[index]['phoneNo'])),
                     ],
                   ),
                 ),
@@ -108,6 +111,7 @@ class AttendanceTable extends StatelessWidget {
             );
           },
         ),
+        )
       ),
     );
   }

@@ -52,11 +52,14 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          Flexible(child: 
                           Text(
                             subjectName,
                             style: const TextStyle(
-                                fontSize: 18, color: Colors.black),
+                                fontSize: 18, color: Colors.black,
+                                fontWeight: FontWeight.bold),
                           ),
+                          )
                         ],
                       ),
                       subtitle: const Row(
