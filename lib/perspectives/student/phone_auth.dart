@@ -10,6 +10,8 @@ import 'package:ble_advertiser/perspectives/student/login.dart';
 import 'package:ble_advertiser/info.dart';
 import 'package:ble_advertiser/animation.dart';
 
+String rollNumberOfStudent = '';
+
 class StudentPhoneAuth extends StatefulWidget {
   const StudentPhoneAuth({super.key});
 
@@ -129,6 +131,9 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                 padding: const EdgeInsets.all(20.0),
                 child: TextField(
                   controller: rollNoController,
+                  onChanged: (value) {
+                    rollNumberOfStudent = value; // Update the global value when text changes
+                  },
                   decoration: InputDecoration(
                     hintText: '077bei001',
                     labelText: 'Roll No',

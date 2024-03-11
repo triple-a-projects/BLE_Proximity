@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ble_advertiser/perspectives/teacher/check_attendance.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:ble_advertiser/perspectives/teacher/email_auth.dart';
+import 'package:ble_advertiser/perspectives/student/phone_auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 //import 'package:ble_advertiser/login.dart';
@@ -73,38 +74,17 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isAdvertising = false;
   Timer? advertiseTime;
   String uniqueUUID = const Uuid().v4();
-  String rollNumber = '';
-
+  String rollNumber = rollNumberOfStudent;
+  // String rollNumberOfStudent = "";
   @override
   void initState() {
     super.initState();
-    fetchRollNumber();
   }
 
   @override
   void dispose() {
     advertiseTime?.cancel();
     super.dispose();
-  }
-
-  Future<void> fetchRollNumber() async {
-    User? currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
-      String userUID = currentUser.uid;
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userUID)
-          .get();
-      if (userDoc.exists) {
-        setState(() {
-          rollNumber = userDoc.get('rollNo');
-        });
-      } else {
-        print('User document not found.');
-      }
-    } else {
-      print('No current user found.');
-    }
   }
 
   @override
@@ -181,9 +161,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> startAdvertising() async {
     String serviceUUID = 'bf27730d-860a-4e09-889c-2d8b6a9e0fe7';
-    String serviceDataUUID = generateUUIDRollNumber(rollNumber);
-    List<int> manufactData = utf8.encode(rollNumber);
-
+    // String rollNumberOfStudent = await fetchRollNumber();
+    List<int> manufactData = utf8.encode(rollNumberOfStudent);
+    print("ManufacturerData:$manufactData");
     AdvertiseData advertiseData = AdvertiseData(
       serviceUuid: serviceUUID,
       manufacturerId: 0xFFFF,
@@ -191,14 +171,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     AdvertiseSetParameters advertiseSetParameters = AdvertiseSetParameters();
-    advertiseTime = Timer.periodic(const Duration(seconds: 5), (timer) {
+        advertiseTime = Timer.periodic(Duration(seconds:2), (timer) {
       try {
-        FlutterBlePeripheral().start(
-            advertiseData: advertiseData,
-            advertiseSetParameters: advertiseSetParameters);
-        setState(() {
-          isAdvertising = true;
-        });
+      FlutterBlePeripheral().start(
+        advertiseData: advertiseData, 
+        advertiseSetParameters: advertiseSetParameters
+      );
+      setState(() {
+        isAdvertising = true;
+      });
       } catch (e) {
         print('Error starting advertising: $e');
       }
@@ -217,10 +198,52 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  String generateUUIDRollNumber(String rollNumber) {
-    String uniqueUUID = const Uuid().v5(Uuid.NAMESPACE_URL, rollNumber);
-    String serviceDataUUID = '0000$uniqueUUID-0000-1000-8000-00805f9b34fb';
-    String serviceRollNumber = serviceDataUUID.replaceAll('-', '');
-    return serviceRollNumber;
-  }
+  Future<String> fetchRollNumber() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      String userUID = currentUser.uid;
+      print("UserID:$userUID");
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userUID)
+          .get();
+      if (userDoc.exists) {
+          rollNumber = userDoc.get('rollNo');
+          print("Roll Number: $rollNumber");
+      } else {
+        rollNumber = "Null";
+        print('User document not found.');
+      }
+    } else {
+      rollNumber = "No user found";
+      print('No current user found.');
+    }
+    return rollNumber;
+  } 
+
+  // Future<String> fetchRollNumber() async {
+
+  //   User? currentUser = FirebaseAuth.instance.currentUser;
+  //   if (currentUser != null) {
+  //     // String userUID = currentUser.uid;
+  //     // print("UserID: $userUID");
+  //     DocumentReference userDocRef = FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(currentUser.phoneNumber);
+
+  //     DocumentSnapshot userDoc = await userDocRef.get();
+  //     if (userDoc.exists) {
+  //       print("User Document ID: $rollNumber");
+  //     } else {
+  //       rollNumber = "Null";
+  //       print('User document not found.');
+  //     }
+  //   } else {
+  //     rollNumber = "No user found";
+  //     print('No current user found.');
+  //   }
+  //   return rollNumber;
+  // }
+
+
 }

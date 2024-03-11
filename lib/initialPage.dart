@@ -1,5 +1,7 @@
+import 'package:ble_advertiser/perspectives/student/login.dart';
 import 'package:ble_advertiser/perspectives/student/phone_auth.dart';
 import 'package:ble_advertiser/perspectives/teacher/email_auth.dart';
+import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ble_advertiser/colors.dart';
