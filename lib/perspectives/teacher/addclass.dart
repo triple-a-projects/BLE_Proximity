@@ -65,6 +65,8 @@ class _AddClassState extends State<AddClass> {
       // Extract the teacher's name from user data
       String teacherName = userSnapshot['name'];
 
+      // String subjectToAdd = selectedSubject ?? customSubjectController.text;
+
       // Add the subject document with all the fields
       await FirebaseFirestore.instance.collection('subjects').add({
         'subject': customSubjectController.text,
@@ -89,6 +91,7 @@ class _AddClassState extends State<AddClass> {
       // Clear input fields after successful addition
       setState(() {
         customSubjectController.clear();
+        selectedSubject = null;
         selectedFaculty = faculties.first;
         selectedSemester = semesters.length >= 6 ? semesters[5] : null;
       });
@@ -130,6 +133,7 @@ class _AddClassState extends State<AddClass> {
                     );
                   },
                   onSuggestionSelected: (suggestion) {
+                    customSubjectController.text = suggestion;
                     setState(() {
                       selectedSubject = suggestion;
                     });
@@ -138,12 +142,9 @@ class _AddClassState extends State<AddClass> {
                     return Text('New Subject will be Added');
                   },
                 ),
-                
-
                 const SizedBox(height: 16),
-                
                 DropdownButtonFormField<String>(
-                  value: selectedFaculty ,
+                  value: selectedFaculty,
                   // ?? faculties.first,
                   onChanged: (newValue) {
                     setState(() {
@@ -163,7 +164,7 @@ class _AddClassState extends State<AddClass> {
                 ),
                 const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
-                  value: selectedSemester, 
+                  value: selectedSemester,
                   // ??
                   //     (semesters.length >= 6 ? semesters[5] : null),
                   onChanged: (newValue) {

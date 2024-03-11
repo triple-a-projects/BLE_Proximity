@@ -161,7 +161,7 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                   ),
                 ),
               ),
-                           Padding(
+              Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: TextField(
                   controller: semesterController,

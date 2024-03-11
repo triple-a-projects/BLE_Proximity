@@ -19,7 +19,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
   int _currentPageIndex = 0;
 
   @override
-   Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return StudentBasePage(
       title: 'Dashboard',
       currentPageIndex: _currentPageIndex,
@@ -115,9 +115,13 @@ class _StudentHomePageState extends State<StudentHomePage> {
 
   Future<QuerySnapshot> getSubjectsForCurrentSemester() async {
     // Get the current user's semester from Firestore or any other source
-    String currentUserSemester = 'III/II'; // Example value, replace it with your logic
+    String currentUserSemester =
+        'III/II'; // Example value, replace it with your logic
 
     // Query subjects where the 'semester' field matches the current user's semester
-    return FirebaseFirestore.instance.collection('subjects').where('semester', isEqualTo: currentUserSemester).get();
+    return FirebaseFirestore.instance
+        .collection('subjects')
+        .where('semester', isEqualTo: currentUserSemester)
+        .get();
   }
 }
