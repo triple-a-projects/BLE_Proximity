@@ -171,15 +171,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     AdvertiseSetParameters advertiseSetParameters = AdvertiseSetParameters();
-        advertiseTime = Timer.periodic(Duration(seconds:2), (timer) {
+    advertiseTime = Timer.periodic(Duration(seconds: 2), (timer) {
       try {
-      FlutterBlePeripheral().start(
-        advertiseData: advertiseData, 
-        advertiseSetParameters: advertiseSetParameters
-      );
-      setState(() {
-        isAdvertising = true;
-      });
+        FlutterBlePeripheral().start(
+            advertiseData: advertiseData,
+            advertiseSetParameters: advertiseSetParameters);
+        setState(() {
+          isAdvertising = true;
+        });
       } catch (e) {
         print('Error starting advertising: $e');
       }
@@ -208,8 +207,8 @@ class _MyHomePageState extends State<MyHomePage> {
           .doc(userUID)
           .get();
       if (userDoc.exists) {
-          rollNumber = userDoc.get('rollNo');
-          print("Roll Number: $rollNumber");
+        rollNumber = userDoc.get('rollNo');
+        print("Roll Number: $rollNumber");
       } else {
         rollNumber = "Null";
         print('User document not found.');
@@ -220,30 +219,4 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     return rollNumber;
   } 
-
-  // Future<String> fetchRollNumber() async {
-
-  //   User? currentUser = FirebaseAuth.instance.currentUser;
-  //   if (currentUser != null) {
-  //     // String userUID = currentUser.uid;
-  //     // print("UserID: $userUID");
-  //     DocumentReference userDocRef = FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(currentUser.phoneNumber);
-
-  //     DocumentSnapshot userDoc = await userDocRef.get();
-  //     if (userDoc.exists) {
-  //       print("User Document ID: $rollNumber");
-  //     } else {
-  //       rollNumber = "Null";
-  //       print('User document not found.');
-  //     }
-  //   } else {
-  //     rollNumber = "No user found";
-  //     print('No current user found.');
-  //   }
-  //   return rollNumber;
-  // }
-
-
 }
