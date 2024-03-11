@@ -64,10 +64,10 @@ class TeacherAttendancePage extends StatelessWidget {
                     trailing: GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(
-                  PageTransitionAnimation(
-                    page: AttendanceTable(),
-                  ),
-                ); // Handle onTap
+                          PageTransitionAnimation(
+                            page: AttendanceTable(),
+                          ),
+                        ); // Handle onTap
                       },
                       child: const Icon(Icons.edit, color: Colors.black),
                     ),

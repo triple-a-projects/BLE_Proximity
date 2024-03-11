@@ -16,8 +16,7 @@ class AttendanceTable extends StatefulWidget {
 class _AttendanceTableState extends State<AttendanceTable> {
   @override
   Widget build(BuildContext context) {
-    final databaseReference =
-        FirebaseDatabase.instance.ref().child('BEI');
+    final databaseReference = FirebaseDatabase.instance.ref().child('BEI');
     final firestore = FirebaseFirestore.instance;
 
     return Scaffold(

@@ -30,11 +30,11 @@ class _StudentSettingsPageState extends State<StudentSettingsPage> {
               size: 30,
             ),
             onPressed: () {
-               Navigator.of(context).push(
-                  PageTransitionAnimation(
-                    page: InfoPage(),
-                  ),
-                );
+              Navigator.of(context).push(
+                PageTransitionAnimation(
+                  page: InfoPage(),
+                ),
+              );
             },
           )
         ],
@@ -79,7 +79,7 @@ class _StudentSettingsPageState extends State<StudentSettingsPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                 Navigator.of(context).push(
+                Navigator.of(context).push(
                   PageTransitionAnimation(
                     page: StudentHomePage(),
                   ),
