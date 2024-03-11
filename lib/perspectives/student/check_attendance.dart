@@ -1,3 +1,4 @@
+import 'package:ble_advertiser/perspectives/student/phone_auth.dart';
 import 'package:ble_advertiser/perspectives/student/student_base.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,25 @@ class SubjectCard extends StatefulWidget {
 
 class _SubjectCardState extends State<SubjectCard> {
   bool isExpanded = false;
+  bool isPresent = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAttendanceStatus(); // Fetch attendance status when widget initializes
+  }
+
+  void fetchAttendanceStatus() async {
+    // Assuming 'users' collection has 'present' field and document ID is rollNo
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(rollNumberOfStudent)
+        .get();
+    setState(() {
+      isPresent = userSnapshot['present'] ??
+          false; // Set isPresent based on 'present' field
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +137,12 @@ class _SubjectCardState extends State<SubjectCard> {
           ),
           Visibility(
             visible: isExpanded,
-            child: const SizedBox(
+            child: SizedBox(
               height: 50,
               child: Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: Text(
-                  'Classes you attended: ',
+                  'Your attendance status: ${isPresent ? 'Present' : 'Absent'}',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black,
