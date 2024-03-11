@@ -132,7 +132,8 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                 child: TextField(
                   controller: rollNoController,
                   onChanged: (value) {
-                    rollNumberOfStudent = value; // Update the global value when text changes
+                    rollNumberOfStudent =
+                        value; // Update the global value when text changes
                   },
                   decoration: InputDecoration(
                     hintText: '077bei001',

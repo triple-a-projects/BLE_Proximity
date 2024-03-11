@@ -171,15 +171,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     AdvertiseSetParameters advertiseSetParameters = AdvertiseSetParameters();
-        advertiseTime = Timer.periodic(Duration(seconds:2), (timer) {
+    advertiseTime = Timer.periodic(Duration(seconds: 2), (timer) {
       try {
-      FlutterBlePeripheral().start(
-        advertiseData: advertiseData, 
-        advertiseSetParameters: advertiseSetParameters
-      );
-      setState(() {
-        isAdvertising = true;
-      });
+        FlutterBlePeripheral().start(
+            advertiseData: advertiseData,
+            advertiseSetParameters: advertiseSetParameters);
+        setState(() {
+          isAdvertising = true;
+        });
       } catch (e) {
         print('Error starting advertising: $e');
       }
@@ -208,8 +207,8 @@ class _MyHomePageState extends State<MyHomePage> {
           .doc(userUID)
           .get();
       if (userDoc.exists) {
-          rollNumber = userDoc.get('rollNo');
-          print("Roll Number: $rollNumber");
+        rollNumber = userDoc.get('rollNo');
+        print("Roll Number: $rollNumber");
       } else {
         rollNumber = "Null";
         print('User document not found.');
@@ -219,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print('No current user found.');
     }
     return rollNumber;
-  } 
+  }
 
   // Future<String> fetchRollNumber() async {
 
@@ -244,6 +243,4 @@ class _MyHomePageState extends State<MyHomePage> {
   //   }
   //   return rollNumber;
   // }
-
-
 }

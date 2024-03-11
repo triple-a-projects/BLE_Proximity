@@ -20,6 +20,7 @@ class TeacherHomePage extends StatefulWidget {
 class _TeacherHomePageState extends State<TeacherHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentPageIndex = 0;
+  List<String> buttonTexts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +72,10 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                       child: Column(
                         children: documents.map((document) {
                           final subjectName = document['subject'] as String;
+                          final index = documents.indexOf(document);
+                          while (buttonTexts.length <= index) {
+                            buttonTexts.add('Start Class');
+                          }
                           return Padding(
                             padding: const EdgeInsets.only(
                               top: 8,
@@ -106,28 +111,40 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                                     alignment: Alignment.centerRight,
                                     child: ElevatedButton(
                                       onPressed: () {
+                                        final isStartPressed =
+                                            buttonTexts[index] == 'Start Class';
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                          const SnackBar(
+                                          SnackBar(
                                             content: Row(
                                               children: [
                                                 Icon(Icons.check,
                                                     color: Colors.white),
                                                 SizedBox(width: 8),
-                                                Text(
-                                                    'Class Started successfully'),
+                                                Text(isStartPressed
+                                                    ? 'Class Started Successfully'
+                                                    : 'Class Ended Sucessfully')
                                               ],
                                             ),
                                             backgroundColor: Colors.green,
                                           ),
                                         );
+
+                                        setState(() {
+                                          buttonTexts[index] =
+                                              (buttonTexts[index] ==
+                                                      'Start Class')
+                                                  ? 'End Class'
+                                                  : 'Start Class';
+                                          ;
+                                        });
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: middle,
                                         textStyle: GoogleFonts.nunito(
                                             fontSize: 20, color: Colors.black),
                                       ),
-                                      child: const Text('Start Class',
+                                      child: Text(buttonTexts[index],
                                           style:
                                               TextStyle(color: Colors.black)),
                                     ),
