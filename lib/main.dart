@@ -220,30 +220,4 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     return rollNumber;
   } 
-
-  // Future<String> fetchRollNumber() async {
-
-  //   User? currentUser = FirebaseAuth.instance.currentUser;
-  //   if (currentUser != null) {
-  //     // String userUID = currentUser.uid;
-  //     // print("UserID: $userUID");
-  //     DocumentReference userDocRef = FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(currentUser.phoneNumber);
-
-  //     DocumentSnapshot userDoc = await userDocRef.get();
-  //     if (userDoc.exists) {
-  //       print("User Document ID: $rollNumber");
-  //     } else {
-  //       rollNumber = "Null";
-  //       print('User document not found.');
-  //     }
-  //   } else {
-  //     rollNumber = "No user found";
-  //     print('No current user found.');
-  //   }
-  //   return rollNumber;
-  // }
-
-
 }

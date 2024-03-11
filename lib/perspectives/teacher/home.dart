@@ -9,6 +9,7 @@ import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
 import 'package:ble_advertiser/colors.dart';
 import 'package:ble_advertiser/info.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
 class TeacherHomePage extends StatefulWidget {
   const TeacherHomePage({Key? key});
@@ -20,6 +21,8 @@ class TeacherHomePage extends StatefulWidget {
 class _TeacherHomePageState extends State<TeacherHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentPageIndex = 0;
+  bool classStarted = false;
+  final String esp32IP = '192.168.1.81';
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +109,11 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                                     alignment: Alignment.centerRight,
                                     child: ElevatedButton(
                                       onPressed: () {
+                                        if(classStarted){
+                                          stopBLEScan();
+                                        } else {
+                                          startBLEScan();
+                                        }
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           const SnackBar(
@@ -127,7 +135,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                                         textStyle: GoogleFonts.nunito(
                                             fontSize: 20, color: Colors.black),
                                       ),
-                                      child: const Text('Start Class',
+                                      child: Text (classStarted? 'Stop Class' : 'Start Class',
                                           style:
                                               TextStyle(color: Colors.black)),
                                     ),
@@ -147,6 +155,36 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
         },
       ),
     ); //BasePage
+  }
+
+  void startBLEScan() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://$esp32IP/startScan'),
+      );
+      print('Scanning');
+      setState(() {
+        classStarted = true;
+      });
+      print('Response: ${response.statusCode} ${response.body}');
+    } catch (e) {
+      print('Error starting BLE scan: $e');
+    }
+  }
+
+  void stopBLEScan() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://$esp32IP/stopScan'),
+      );
+      print('Stopping');
+      setState(() {
+        classStarted = false;
+      });
+      print('Response: ${response.statusCode} ${response.body}');
+    } catch (e) {
+      print('Error stopping BLE scan: $e');
+    }
   }
 
   Future<List<String>> getTeacherNames() async {
