@@ -137,28 +137,12 @@ class _SubjectCardState extends State<SubjectCard> {
           ),
           Visibility(
             visible: isExpanded,
-            child: const SizedBox(
-              height: 50,
-              child: Padding(
-                padding: EdgeInsets.all(5),
-                child: Text(
-                  'Your attendance status',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Visibility(
-            visible: isExpanded,
             child: SizedBox(
               height: 50,
               child: Padding(
                 padding: const EdgeInsets.all(5),
                 child: Text(
-                  isPresent ? 'Present' : 'Absent',
+                  'Your attendance status: ${isPresent ? 'Present' : 'Absent'}',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black,
