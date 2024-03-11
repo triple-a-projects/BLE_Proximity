@@ -52,16 +52,21 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
       ),
     );
   }
-    Future<QuerySnapshot> getSubjectsForCurrentSemester() async {
+
+  Future<QuerySnapshot> getSubjectsForCurrentSemester() async {
     // Get the current user's semester from Firestore or any other source
-    String currentUserSemester = 'III/II'; // Example value, replace it with your actual logic
+    String currentUserSemester =
+        'III/II'; // Example value, replace it with your actual logic
 
     // Query subjects where the 'semester' field matches the current user's semester
-    return FirebaseFirestore.instance.collection('subjects').where('semester', isEqualTo: currentUserSemester).get();
+    return FirebaseFirestore.instance
+        .collection('subjects')
+        .where('semester', isEqualTo: currentUserSemester)
+        .get();
   }
 }
 
-  class SubjectCard extends StatefulWidget {
+class SubjectCard extends StatefulWidget {
   final String subjectName;
 
   const SubjectCard({Key? key, required this.subjectName}) : super(key: key);
@@ -131,5 +136,3 @@ class _SubjectCardState extends State<SubjectCard> {
     );
   }
 }
-
-

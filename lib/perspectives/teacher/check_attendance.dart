@@ -12,7 +12,7 @@ class TeacherAttendancePage extends StatelessWidget {
   const TeacherAttendancePage({super.key});
 
   @override
-   Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return TeacherBasePage(
       title: 'Check Attendance',
       currentPageIndex: 2,
@@ -36,13 +36,16 @@ class TeacherAttendancePage extends StatelessWidget {
           return ListView.builder(
             itemCount: documents.length,
             itemBuilder: (context, index) {
-              final Map<String, dynamic> data = documents[index].data() as Map<String, dynamic>;
+              final Map<String, dynamic> data =
+                  documents[index].data() as Map<String, dynamic>;
               final String subjectName = data['subject'];
-              final String teacherName = data['teacherName']; // Retrieve teacher's name from the subject data
+              final String teacherName = data[
+                  'teacherName']; // Retrieve teacher's name from the subject data
               return FutureBuilder<bool>(
                 future: isTeacherAssociatedWithSubject(teacherName),
                 builder: (context, teacherAssociatedSnapshot) {
-                  if (teacherAssociatedSnapshot.connectionState == ConnectionState.waiting) {
+                  if (teacherAssociatedSnapshot.connectionState ==
+                      ConnectionState.waiting) {
                     return const CircularProgressIndicator(color: Colors.white);
                   }
 
@@ -50,7 +53,8 @@ class TeacherAttendancePage extends StatelessWidget {
                     return Text('Error: ${teacherAssociatedSnapshot.error}');
                   }
 
-                  final bool isTeacherAssociated = teacherAssociatedSnapshot.data ?? false;
+                  final bool isTeacherAssociated =
+                      teacherAssociatedSnapshot.data ?? false;
 
                   if (isTeacherAssociated) {
                     return Padding(
@@ -101,8 +105,10 @@ class TeacherAttendancePage extends StatelessWidget {
   }
 
   Future<bool> isTeacherAssociatedWithSubject(String teacherName) async {
-    final teachersCollection = FirebaseFirestore.instance.collection('teachers');
-    final querySnapshot = await teachersCollection.where('name', isEqualTo: teacherName).get();
+    final teachersCollection =
+        FirebaseFirestore.instance.collection('teachers');
+    final querySnapshot =
+        await teachersCollection.where('name', isEqualTo: teacherName).get();
     return querySnapshot.docs.isNotEmpty;
   }
 }

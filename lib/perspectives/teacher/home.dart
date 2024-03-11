@@ -30,7 +30,8 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
         future: getTeacherNames(),
         builder: (context, teacherNamesSnapshot) {
           if (teacherNamesSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator(color: Colors.white));
+            return Center(
+                child: CircularProgressIndicator(color: Colors.white));
           }
 
           if (teacherNamesSnapshot.hasError) {
@@ -40,7 +41,8 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
           final List<String> teacherNames = teacherNamesSnapshot.data ?? [];
 
           return StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('subjects')
+            stream: FirebaseFirestore.instance
+                .collection('subjects')
                 .where('teacherName', whereIn: teacherNames)
                 .snapshots(),
             builder: (context, snapshot) {
@@ -89,8 +91,8 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10, top: 5),
+                                      padding: const EdgeInsets.only(
+                                          left: 10, top: 5),
                                       child: Text(
                                         subjectName,
                                         style: const TextStyle(
@@ -148,7 +150,8 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
   }
 
   Future<List<String>> getTeacherNames() async {
-    final teachersCollection = FirebaseFirestore.instance.collection('teachers');
+    final teachersCollection =
+        FirebaseFirestore.instance.collection('teachers');
     final querySnapshot = await teachersCollection.get();
     final List<String> teacherNames = [];
     querySnapshot.docs.forEach((doc) {
