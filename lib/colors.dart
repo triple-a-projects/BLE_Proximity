@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-//canva colors
+//Finals colors based on presentation
 const darkest = Color(0xFF015C92);
 const secondDark = Color(0XFF2D82B5);
 const middle = Color(0XFF88CDF6);

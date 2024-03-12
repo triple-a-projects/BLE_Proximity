@@ -92,7 +92,8 @@ class TeacherAttendancePage extends StatelessWidget {
                       ),
                     );
                   } else {
-                    return const SizedBox(); // Return an empty container if the teacher is not associated with the subject
+                    return const SizedBox();
+                    // Return empty container if the teacher is not associated with the subject
                   }
                 },
               );

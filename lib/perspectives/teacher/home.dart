@@ -20,7 +20,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
   List<String> buttonTexts = [];
   bool classStarted = false;
   final String esp32IP = '192.168.1.81';
-  String teacherName = currentTeacher; 
+  String teacherName = currentTeacher;
 
   @override
   Widget build(BuildContext context) {
@@ -124,10 +124,14 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                                       );
 
                                       setState(() {
-                                        classStarted = !classStarted;
-                                        buttonTexts[index] = classStarted
-                                            ? 'End Class'
-                                            : 'Start Class';
+                                        classStarted =
+                                            !classStarted; // Added last
+
+                                        buttonTexts[index] =
+                                            (buttonTexts[index] ==
+                                                    'Start Class')
+                                                ? 'End Class'
+                                                : 'Start Class';
                                       });
                                     },
                                     style: ElevatedButton.styleFrom(
@@ -136,9 +140,10 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                                           fontSize: 20, color: Colors.black),
                                     ),
                                     child: Text(
-                                      classStarted
-                                          ? 'End Class'
-                                          : 'Start Class',
+                                      buttonTexts[index],
+                                      // classStarted
+                                      //     ? 'End Class'
+                                      //     : 'Start Class',
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   ),

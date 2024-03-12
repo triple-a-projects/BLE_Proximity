@@ -1,24 +1,23 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:async';
-import 'package:ble_advertiser/colors.dart';
-import 'package:ble_advertiser/info.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:ble_advertiser/colors.dart';
+import 'package:ble_advertiser/info.dart';
 import 'package:ble_advertiser/initialPage.dart';
 import 'package:ble_advertiser/perspectives/student/check_attendance.dart';
 import 'package:ble_advertiser/perspectives/student/home.dart';
 import 'package:ble_advertiser/perspectives/student/login.dart';
 import 'package:ble_advertiser/perspectives/student/phone_auth.dart';
 import 'package:ble_advertiser/perspectives/teacher/addclass.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ble_advertiser/perspectives/teacher/check_attendance.dart';
 import 'package:ble_advertiser/perspectives/teacher/home.dart';
 import 'package:ble_advertiser/perspectives/teacher/email_auth.dart';
-import 'package:ble_advertiser/perspectives/student/phone_auth.dart';
 
-import 'package:firebase_core/firebase_core.dart';
-//import 'package:ble_advertiser/login.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'firebase_options.dart';
 import 'package:flutter/foundation.dart';
@@ -218,5 +217,5 @@ class _MyHomePageState extends State<MyHomePage> {
       print('No current user found.');
     }
     return rollNumber;
-  } 
+  }
 }

@@ -13,8 +13,7 @@ class StudentAttendancePage extends StatefulWidget {
 }
 
 class _StudentAttendancePageState extends State<StudentAttendancePage> {
-  int _currentPageIndex =
-      1; // Set the initial page index to 1 for Check Attendance
+  int _currentPageIndex = 1; // 1 for check attendance page
   List<bool> isExpandedList = List<bool>.generate(10, (index) => false);
 
   @override
@@ -55,11 +54,10 @@ class _StudentAttendancePageState extends State<StudentAttendancePage> {
   }
 
   Future<QuerySnapshot> getSubjectsForCurrentSemester() async {
-    // Get the current user's semester from Firestore or any other source
-    String currentUserSemester =
-        'III/II'; // Example value, replace it with your actual logic
+    // Current semester of user
+    String currentUserSemester = 'III/II'; //Sixth semester
 
-    // Query subjects where the 'semester' field matches the current user's semester
+    // Query subjects where 'semester' field matches current user's semester
     return FirebaseFirestore.instance
         .collection('subjects')
         .where('semester', isEqualTo: currentUserSemester)
@@ -87,7 +85,7 @@ class _SubjectCardState extends State<SubjectCard> {
   }
 
   void fetchAttendanceStatus() async {
-    // Assuming 'users' collection has 'present' field and document ID is rollNo
+    // Users should have present and document ID =roll no
     DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(rollNumberOfStudent)

@@ -42,7 +42,7 @@ class _TeacherEmailAuthState extends State<TeacherEmailAuth> {
     }
   }
 
-  // Function to create a user document in Firestore
+  // To create a user document in Firestore
   Future<void> createUserDocument(User teacher) async {
     try {
       // Reference to the 'users' collection in Firestore

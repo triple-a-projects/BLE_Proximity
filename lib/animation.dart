@@ -1,5 +1,4 @@
-// page_transition_animation.dart
-
+//Page Transition Animation
 import 'package:flutter/material.dart';
 
 class PageTransitionAnimation extends PageRouteBuilder {

@@ -67,14 +67,14 @@ class _AddClassState extends State<AddClass> {
 
       // String subjectToAdd = selectedSubject ?? customSubjectController.text;
 
-      // Add the subject document with all the fields
+      // Add subject document with all the fields
       await FirebaseFirestore.instance.collection('subjects').add({
         'subject': customSubjectController.text,
         'faculty': selectedFaculty,
         'semester': selectedSemester,
         'teacherName': teacherName, // Add teacher's name to the document
       });
-      // Show "Added successfully" message using SnackBar
+      // Show "Added successfully" message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(

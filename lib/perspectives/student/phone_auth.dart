@@ -68,10 +68,10 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
     );
   }
 
-  // Function to create a user document in Firestore
+  // To create a user document in Firestore
   Future<void> createUserDocument(User user) async {
     try {
-      // Reference to the 'users' collection in Firestore
+      // Reference to 'users' collection in Firestore
       CollectionReference users =
           FirebaseFirestore.instance.collection('users');
 
@@ -138,14 +138,9 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                   decoration: InputDecoration(
                     hintText: '077bei001',
                     labelText: 'Roll No',
-                    // labelStyle: TextStyle(color: darkest),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    //  focusedBorder: OutlineInputBorder(
-                    //   borderRadius: BorderRadius.circular(15),
-                    //   borderSide: BorderSide(color: darkest),
-                    // )
                   ),
                 ),
               ),
@@ -156,14 +151,9 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                   decoration: InputDecoration(
                     hintText: 'John Doe',
                     labelText: 'Name',
-                    // labelStyle: TextStyle(color: darkest),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    //  focusedBorder: OutlineInputBorder(
-                    //   borderRadius: BorderRadius.circular(15),
-                    //   borderSide: BorderSide(color: darkest),
-                    // )
                   ),
                 ),
               ),
@@ -174,14 +164,9 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                   decoration: InputDecoration(
                     hintText: 'III/II',
                     labelText: 'Semester',
-                    // labelStyle: TextStyle(color: darkest),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    //  focusedBorder: OutlineInputBorder(
-                    //   borderRadius: BorderRadius.circular(15),
-                    //   borderSide: BorderSide(color: darkest),
-                    // )
                   ),
                 ),
               ),
@@ -204,15 +189,9 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                   decoration: InputDecoration(
                     hintText: '9841000000',
                     labelText: 'Phone',
-                    // labelStyle: TextStyle(color: darkest),
                     border: OutlineInputBorder(
-                      // borderSide: BorderSide(color: darkest),
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    // focusedBorder: OutlineInputBorder(
-                    //   borderRadius: BorderRadius.circular(15),
-                    //   borderSide: BorderSide(color: darkest),
-                    // )
                   ),
                   onChanged: (val) {
                     userNumber = val.completeNumber;
@@ -228,15 +207,10 @@ class _StudentPhoneAuthState extends State<StudentPhoneAuth> {
                     decoration: InputDecoration(
                       hintText: 'OTP Code',
                       labelText: 'OTP',
-                      // labelStyle: TextStyle(color: darkest),
                       border: OutlineInputBorder(
                         borderSide: const BorderSide(color: darkest),
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      //    focusedBorder: OutlineInputBorder(
-                      //   borderRadius: BorderRadius.circular(15),
-                      //   borderSide: BorderSide(color: darkest),
-                      // )
                     ),
                   ),
                 ),

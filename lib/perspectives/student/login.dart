@@ -95,7 +95,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
 
       print('Authenticated: $authenticated');
       if (authenticated) {
-        // Navigate to the main page
+        // Navigate to home page of student
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const StudentHomePage()),
